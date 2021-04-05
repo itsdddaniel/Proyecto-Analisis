@@ -62,10 +62,11 @@ CREATE TABLE Tienda
 CREATE TABLE Producto
 (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    int_categoria INT NOT NULL COMMENT "Lleva el registro de los productos y su categoria",
     vchar_nombre VARCHAR(50) NOT NULL COMMENT "Nombre del producto.",
     fl_precio FLOAT NOT NULL COMMENT "Precio del producto.",
     int_disponibilidad INT NOT NULL COMMENT "Existencia del producto.",
-    tex_descripción INT NOT NULL COMMENT "Descripción del producto.",
+    tex_descripción TEXT NOT NULL COMMENT "Descripción del producto.",
     fk_tiendaID INT NOT NULL COMMENT "Referencia a la tabla tienda.",
     FOREIGN KEY (fk_tiendaID) REFERENCES Tienda(id)
 
