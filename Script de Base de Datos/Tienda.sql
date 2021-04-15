@@ -1,8 +1,8 @@
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+--SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+--SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+--SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema Tienda
@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Tienda
 -- -----------------------------------------------------
-CREATE DATABASE IF NOT EXISTS Tienda DEFAULT CHARACTER SET utf8 ;
+CREATE DATABASE IF NOT EXISTS Tienda CHARACTER SET utf8 ;
 USE Tienda ;
 
 -- -----------------------------------------------------
@@ -36,10 +36,9 @@ CREATE TABLE IF NOT EXISTS Categoria (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Categoria/Producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS CategoriaYProducto (
-  id_categoria INT NOT NULL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Categoria_Producto (
   id_producto INT NOT NULL PRIMARY KEY,
-  INDEX fk_Cat_idx (id_categoria ASC) VISIBLE,
+  id_categoria INT NOT NULL,
 
     FOREIGN KEY (id_categoria)
     REFERENCES Categoria (id_categoria)
@@ -77,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Producto (
   nombre VARCHAR(45) NOT NULL,
   PrecioCompra FLOAT UNSIGNED NOT NULL,
   PrecioVenta FLOAT UNSIGNED NOT NULL,
-  fechaEntrada DATETIME NOT NULL DEFAULT TIMESTAMP(6),
+  fechaEntrada DATETIME NOT NULL,
   urlProducto VARCHAR(250) NOT NULL,
   Descripcion TEXT(50) NULL,
 
@@ -86,7 +85,7 @@ CREATE TABLE IF NOT EXISTS Producto (
     ON DELETE NO ACTION ON UPDATE NO ACTION,
 
     FOREIGN KEY (id_producto)
-    REFERENCES CategoriaYProducto (id_producto)
+    REFERENCES Categoria_Producto (id_producto)
     ON DELETE NO ACTION ON UPDATE NO ACTION,
 
     FOREIGN KEY (id_novedad)
@@ -111,9 +110,9 @@ CREATE TABLE IF NOT EXISTS Paquete (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Paquete/Producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Paquete/Producto (
-  id_Paquete INT NOT NULL PRIMARY KEY ,
-  id_Producto INT NOT NULL PRIMARY KEY ,
+CREATE TABLE IF NOT EXISTS Paquete_Producto (
+  id_Paquete INT NOT NULL,
+  id_Producto INT NOT NULL,
 
     FOREIGN KEY (id_Producto)
     REFERENCES Producto (id_producto)
@@ -190,9 +189,9 @@ CREATE TABLE IF NOT EXISTS Orden (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Detalle Orden`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle Orden (
-  id_venta INT NOT NULL PRIMARY KEY ,
-  id_producto INT NOT NULL PRIMARY KEY ,
+CREATE TABLE IF NOT EXISTS Detalle_Orden (
+  id_venta INT NOT NULL ,
+  id_producto INT NOT NULL ,
   cantidad INT NOT NULL,
   precioUnitario FLOAT NOT NULL,
   SubTotal FLOAT UNSIGNED NOT NULL,
@@ -204,8 +203,7 @@ CREATE TABLE IF NOT EXISTS Detalle Orden (
 
     FOREIGN KEY (id_producto)
     REFERENCES Producto (id_producto)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE CASCADE ON UPDATE CASCADE,
 
     FOREIGN KEY (id_venta)
     REFERENCES Orden (idVenta)
@@ -243,9 +241,9 @@ CREATE TABLE IF NOT EXISTS Compra (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Detalle Compra`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle Compra (
-  id_Compra INT NOT NULL PRIMARY KEY ,
-  id_producto INT NOT NULL PRIMARY KEY ,
+CREATE TABLE IF NOT EXISTS Detalle_Compra (
+  id_Compra INT NOT NULL ,
+  id_producto INT NOT NULL ,
   cantidad INT NOT NULL,
   precio FLOAT NOT NULL,
   NumReferencia VARCHAR(45) NOT NULL,
@@ -272,9 +270,9 @@ CREATE TABLE IF NOT EXISTS Devolucion (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Detalle Devolucion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle Devolucion (
-  id_Devolucion INT NOT NULL PRIMARY KEY ,
-  id_producto INT NOT NULL PRIMARY KEY ,
+CREATE TABLE IF NOT EXISTS Detalle_Devolucion (
+  id_Devolucion INT NOT NULL ,
+  id_producto INT NOT NULL ,
 
     FOREIGN KEY (id_producto)
     REFERENCES Producto (id_producto)
@@ -316,6 +314,6 @@ CREATE TABLE IF NOT EXISTS Login1 (
 
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+--SET SQL_MODE=@OLD_SQL_MODE;
+--SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+--SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
