@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Categoria (
 -- -----------------------------------------------------
 -- Table `Tienda`.`Categoria/Producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Categoria/Producto (
+CREATE TABLE IF NOT EXISTS CategoriaYProducto (
   id_categoria INT NOT NULL PRIMARY KEY,
   id_producto INT NOT NULL PRIMARY KEY,
   INDEX fk_Cat_idx (id_categoria ASC) VISIBLE,
@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS Producto (
   PrecioCompra FLOAT UNSIGNED NOT NULL,
   PrecioVenta FLOAT UNSIGNED NOT NULL,
   fechaEntrada DATETIME NOT NULL DEFAULT TIMESTAMP(6),
+  urlProducto VARCHAR(250) NOT NULL,
   Descripcion TEXT(50) NULL,
 
     FOREIGN KEY (id_marca)
@@ -85,7 +86,7 @@ CREATE TABLE IF NOT EXISTS Producto (
     ON DELETE NO ACTION ON UPDATE NO ACTION,
 
     FOREIGN KEY (id_producto)
-    REFERENCES Categoria/Producto (id_producto)
+    REFERENCES CategoriaYProducto (id_producto)
     ON DELETE NO ACTION ON UPDATE NO ACTION,
 
     FOREIGN KEY (id_novedad)
