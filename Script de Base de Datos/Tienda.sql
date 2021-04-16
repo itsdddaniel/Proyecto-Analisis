@@ -11,14 +11,15 @@
 -- -----------------------------------------------------
 -- Schema Tienda
 -- -----------------------------------------------------
-CREATE DATABASE IF NOT EXISTS Tienda CHARACTER SET utf8 ;
+DROP DATABASE IF EXISTS Tienda;
+CREATE DATABASE Tienda CHARACTER SET utf8 ;
 USE Tienda ;
 
 -- -----------------------------------------------------
 -- Table `Tienda`.`Marca`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Marca (
-  idMarca INT NOT NULL PRIMARY KEY ,
+  idMarca INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   nombre VARCHAR(45) NOT NULL,
   descripcion VARCHAR(45) NULL
 ) ENGINE = InnoDB;
@@ -28,8 +29,8 @@ CREATE TABLE IF NOT EXISTS Marca (
 -- Table `Tienda`.`Categoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Categoria (
-  id_categoria INT NOT NULL PRIMARY KEY ,
-  name VARCHAR(45) NOT NULL
+  idCategoria INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
+  nombre VARCHAR(45) NOT NULL
 ) ENGINE = InnoDB;
 
 
@@ -37,11 +38,11 @@ CREATE TABLE IF NOT EXISTS Categoria (
 -- Table `Tienda`.`Categoria/Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Categoria_Producto (
-  id_producto INT NOT NULL PRIMARY KEY,
+  id_producto INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   id_categoria INT NOT NULL,
 
     FOREIGN KEY (id_categoria)
-    REFERENCES Categoria (id_categoria)
+    REFERENCES Categoria (idCategoria)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
@@ -50,8 +51,8 @@ CREATE TABLE IF NOT EXISTS Categoria_Producto (
 -- Table `Tienda`.`Novedad`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Novedad (
-  idNovedad INT NOT NULL PRIMARY KEY,
-  tipoNovedad ENUM("Descuento") NOT NULL
+  idNovedad INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  tipoNovedad ENUM("Descuento"," ") DEFAULT " " NOT NULL
 ) ENGINE = InnoDB;
 
 
@@ -59,8 +60,8 @@ CREATE TABLE IF NOT EXISTS Novedad (
 -- Table `Tienda`.`Estado`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Estado (
-  idEstado INT NOT NULL PRIMARY KEY,
-  tipoEstado ENUM("Agotado") NOT NULL
+  idEstado INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  tipoEstado ENUM("Agotado","Existencia") DEFAULT "Existencia" NOT NULL
 ) ENGINE = InnoDB;
 
 
@@ -68,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Estado (
 -- Table `Tienda`.`Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Producto (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   id_producto INT NOT NULL,
   id_marca INT NOT NULL,
   id_estado INT NOT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE IF NOT EXISTS Producto (
 -- Table `Tienda`.`Paquete`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Paquete (
-  idPaquete INT NOT NULL PRIMARY KEY ,
+  idPaquete INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   nomre VARCHAR(45) NOT NULL
 ) ENGINE = InnoDB;
 
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS Paquete_Producto (
 -- Table `Tienda`.`Cargo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Cargo (
-  idCargo INT NOT NULL PRIMARY KEY ,
+  idCargo INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   nombre VARCHAR(45) NOT NULL
 ) ENGINE = InnoDB;
 
@@ -171,7 +172,7 @@ CREATE TABLE IF NOT EXISTS Cliente (
 -- Table `Tienda`.`Orden`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Orden (
-  idVenta INT NOT NULL PRIMARY KEY ,
+  idVenta INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   id_cliente VARCHAR(45) NOT NULL,
   id_empleado VARCHAR(15) NOT NULL,
   Fecha DATE NOT NULL,
@@ -190,7 +191,7 @@ CREATE TABLE IF NOT EXISTS Orden (
 -- Table `Tienda`.`Detalle Orden`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Detalle_Orden (
-  id_venta INT NOT NULL ,
+  id_venta INT AUTO_INCREMENT NOT NULL ,
   id_producto INT NOT NULL ,
   cantidad INT NOT NULL,
   precioUnitario FLOAT NOT NULL,
@@ -215,7 +216,7 @@ CREATE TABLE IF NOT EXISTS Detalle_Orden (
 -- Table `Tienda`.`Distribuidor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Distribuidor (
-  idDistribuidor INT NOT NULL PRIMARY KEY ,
+  idDistribuidor INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   nombre VARCHAR(45) NOT NULL,
   telefono VARCHAR(45) NOT NULL,
   fax VARCHAR(45) NOT NULL,
@@ -228,7 +229,7 @@ CREATE TABLE IF NOT EXISTS Distribuidor (
 -- Table `Tienda`.`Compra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Compra (
-  idCompra INT NOT NULL PRIMARY KEY ,
+  idCompra INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   id_distribuidor INT NOT NULL,
   fecha DATETIME NOT NULL,
 
@@ -242,7 +243,7 @@ CREATE TABLE IF NOT EXISTS Compra (
 -- Table `Tienda`.`Detalle Compra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Detalle_Compra (
-  id_Compra INT NOT NULL ,
+  id_Compra INT AUTO_INCREMENT NOT NULL ,
   id_producto INT NOT NULL ,
   cantidad INT NOT NULL,
   precio FLOAT NOT NULL,
@@ -262,7 +263,7 @@ CREATE TABLE IF NOT EXISTS Detalle_Compra (
 -- Table `Tienda`.`Devolucion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Devolucion (
-  idDevolucion INT NOT NULL PRIMARY KEY ,
+  idDevolucion INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   causa VARCHAR(45) NOT NULL
 ) ENGINE = InnoDB;
 
@@ -289,7 +290,7 @@ CREATE TABLE IF NOT EXISTS Detalle_Devolucion (
 -- Table `Tienda`.`Accion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Accion (
-  idAccion INT NOT NULL PRIMARY KEY ,
+  idAccion INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
   nombre VARCHAR(45) NOT NULL
 ) ENGINE = InnoDB;
 
