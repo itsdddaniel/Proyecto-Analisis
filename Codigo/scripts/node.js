@@ -46,7 +46,7 @@ db.connect((err) =>
   console.log("DB connection OK");
 });
 
-db.query("SELECT * FROM `Producto`", function (err, results) 
+db.query("SELECT * FROM `Producto` WHERE id_producto = 1;", function (err, results) 
 {
   if (err) 
   { 
@@ -71,10 +71,32 @@ db.query("SELECT * FROM `Producto`", function (err, results)
     app.set('views', path.join(__dirname, '/../views/celulares'));
     res.render('celulares.ejs', {data: phoneNames, data2: links}); 
   });
+});
+
+db.query("SELECT * FROM `Producto` WHERE id_producto = 3;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
   app.get('/views/consolas', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/consolas'));
-    res.render('consolas.ejs', {data: "phoneNames"}); 
+    res.render('consolas.ejs', {data: consoleNames, data2: links}); 
   });
 });
+

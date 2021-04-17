@@ -62,4 +62,26 @@
             <footer class="main-footer">Derechos Reservados 2021</footer>
         </div>
     </body>
+    <script>
+        var name = "<%= data %>";
+        var link = "<%= data2 %>";
+        var resultTwo = link.split(",")
+        var result = name.split(",");
+        for(var i = 0; i<result.length; i++)
+        {
+            var label = document.createElement('label');
+            label.id = result[i];
+            label.innerHTML = result[i];
+            document.getElementById("container").appendChild(label);
+
+            addImg(resultTwo[i]);
+            
+        }
+        function addImg(result)
+        {
+            var image = document.createElement('img');
+            image.src = `${result}`;
+            document.getElementById("container").appendChild(image);
+        }
+    </script>
 </html>
