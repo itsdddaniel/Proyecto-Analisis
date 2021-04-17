@@ -73,6 +73,33 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 1;", function (err, resul
   });
 });
 
+db.query("SELECT * FROM `Producto` WHERE id_producto = 2;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/computadoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/computadoras'));
+    res.render('computadoras.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
 db.query("SELECT * FROM `Producto` WHERE id_producto = 3;", function (err, results) 
 {
   if (err) 
@@ -100,3 +127,56 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 3;", function (err, resul
   });
 });
 
+db.query("SELECT * FROM `Producto` WHERE id_producto = 4;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/laptops', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/laptops'));
+    res.render('laptops.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Producto` WHERE id_producto = 5;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/impresoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/impresoras'));
+    res.render('impresoras.ejs', {data: consoleNames, data2: links}); 
+  });
+});
