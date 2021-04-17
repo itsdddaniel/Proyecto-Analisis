@@ -28,9 +28,9 @@ Hay de Todo
 - Consolas -> Daniel
 - Computadoras -> Daniel
 - Impresoras -> Daniel
-- Parlantes -> Daniel
+- Laptops -> Daniel
+- Parlantes -> Bryan
 - Tablets -> Bryan
 - Juegos -> Bryan
 - Accesorios -> Bryan
 - Televisores -> Bryan
-- Equipos de sonido -> Bryan
