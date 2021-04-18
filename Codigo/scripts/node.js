@@ -180,3 +180,111 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     res.render('impresoras.ejs', {data: consoleNames, data2: links}); 
   });
 });
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 6;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/televisores', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/televisores'));
+    res.render('televisores.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 7;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/parlantes', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/parlantes'));
+    res.render('parlantes.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 8;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/tablets', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/tablets'));
+    res.render('tablets.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 9;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/accesorios', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/accesorios'));
+    res.render('accesorios.ejs', {data: consoleNames, data2: links}); 
+  });
+});
