@@ -63,19 +63,27 @@
         </div>
     </body>
     <script>
+        var count = 0;
         var name = "<%= data %>";
         var link = "<%= data2 %>";
-        var resultTwo = link.split(",")
+        var description = "<%= data3 %>";
+        var price = "<%= data4 %>";
         var result = name.split(",");
+        var resultTwo = link.split(",")
+        var resultThree = description.split(",");
+        var resultFour = price.split(",");
         for(var i = 0; i<result.length; i++)
         {
             var label = document.createElement('label');
             label.id = result[i];
             label.innerHTML = result[i];
             document.getElementById("container").appendChild(label);
+            count = count + 1;
 
             addImg(resultTwo[i]);
-            
+            addDetails(resultThree[i],resultFour[i],count);
+            addToCart(result,count);
+
         }
         function addImg(result)
         {
@@ -86,6 +94,43 @@
             image.style.marginRight = "auto";
             image.style.width = "55%";
             document.getElementById("container").appendChild(image);
+        }
+        function addDetails(description,price,count)
+        {
+            var button = document.createElement("button");
+            button.id = `modalButton${count}`;
+            button.innerText = "Detalles";
+            document.getElementById("container").appendChild(button);
+
+            var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span></div>`;
+            var divModal = document.createElement("div");
+            divModal.className = "modal";
+            divModal.id = `modal${count}`;
+            divModal.style.cssText = "display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%;  height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);";
+            document.getElementById("container").appendChild(divModal);
+            divModal.innerHTML = htmlString;
+            var spanStyle = document.getElementById(`close${count}`);
+            spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
+
+            var modal = document.getElementById(`modal${count}`);
+            var btn = document.getElementById(`modalButton${count}`);
+            var span = document.getElementsByClassName(`close${count}`)[0];
+            btn.onclick = function() 
+            {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function() 
+            {
+                modal.style.display = "none";
+            }
+        }
+        function addToCart(result,count)
+        {
+            var addToCart = document.createElement("button");
+            addToCart.id = `addToCart${count}`;
+            addToCart.innerText = "Añadir al Carrito";
+            document.getElementById("container").appendChild(addToCart);
         }
     </script>
 </html>
