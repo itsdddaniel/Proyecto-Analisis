@@ -4,6 +4,20 @@ html, body
     background: #fffcfb;
 }
 
+button
+{
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    margin:10px 10px 50px 20px;
+}
+
 #usernameID, #passwordID
 {
     color: white;
@@ -72,6 +86,11 @@ html, body
      {
        flex-direction: column;
      }
+}
+
+#container
+{
+    text-align: center;
 }
 
 #container > label
@@ -198,4 +217,14 @@ html, body
   position: relative;
   margin: auto;
   background: #fffcfb;
+} 
+
+.modal-content 
+{
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%;
+    height: 50%;
 }
