@@ -1,6 +1,7 @@
 html, body 
 {
     margin: 0px;
+    background: #fffcfb;
 }
 
 #usernameID, #passwordID
@@ -71,6 +72,12 @@ html, body
      {
        flex-direction: column;
      }
+}
+
+#container > label
+{
+    display: block;
+    text-align: center;
 }
 
 /*
@@ -183,4 +190,12 @@ html, body
 {
     width: 85%;
     padding: 10px;
+}
+
+#container 
+{
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+  background: #fffcfb;
 }

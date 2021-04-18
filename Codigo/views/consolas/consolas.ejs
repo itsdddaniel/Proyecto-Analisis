@@ -81,6 +81,10 @@
         {
             var image = document.createElement('img');
             image.src = `${result}`;
+            image.style.display = "block";
+            image.style.marginLeft = "auto";
+            image.style.marginRight = "auto";
+            image.style.width = "55%";
             document.getElementById("container").appendChild(image);
         }
     </script>
