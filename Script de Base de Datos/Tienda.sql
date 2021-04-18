@@ -38,15 +38,11 @@ CREATE TABLE IF NOT EXISTS Categoria (
 -- Table `Tienda`.`Categoria/Producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Categoria_Producto (
-  id_producto INT NOT NULL,
+  id_producto INT NOT NULL PRIMARY KEY,
   id_categoria INT NOT NULL,
 
     FOREIGN KEY (id_categoria)
     REFERENCES Categoria (idCategoria)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_producto)
-    REFERENCES Producto (id_producto)
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
@@ -87,6 +83,10 @@ CREATE TABLE IF NOT EXISTS Producto (
 
     FOREIGN KEY (id_marca)
     REFERENCES Marca (idMarca)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+    FOREIGN KEY (id_producto)
+    REFERENCES Categoria_Producto (id_producto)
     ON DELETE NO ACTION ON UPDATE NO ACTION,
 
     FOREIGN KEY (id_novedad)
