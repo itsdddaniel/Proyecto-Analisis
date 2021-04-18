@@ -44,6 +44,7 @@ db.connect((err) =>
     throw err; 
   }
   console.log("DB connection OK");
+  console.log("Para terminar la conexión: CTRL + C")
 });
 
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 1;", function (err, results) 
@@ -286,5 +287,140 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/accesorios'));
     res.render('accesorios.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 10;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/estufas', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/estufas'));
+    res.render('estufas.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 11;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/lavadoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/lavadoras'));
+    res.render('lavadoras.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 12;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/refrigeradoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/refrigeradoras'));
+    res.render('refrigeradoras.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 13;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/microondas', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/microondas'));
+    res.render('microondas.ejs', {data: consoleNames, data2: links}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 14;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var consoleNames = []
+  var links = []
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    consoleNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/planchas', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/planchas'));
+    res.render('planchas.ejs', {data: consoleNames, data2: links}); 
   });
 });
