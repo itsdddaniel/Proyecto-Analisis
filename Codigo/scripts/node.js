@@ -46,7 +46,7 @@ db.connect((err) =>
   console.log("DB connection OK");
 });
 
-db.query("SELECT * FROM `Producto` WHERE id_producto = 1;", function (err, results) 
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 1;", function (err, results) 
 {
   if (err) 
   { 
@@ -73,7 +73,7 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 1;", function (err, resul
   });
 });
 
-db.query("SELECT * FROM `Producto` WHERE id_producto = 2;", function (err, results) 
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 2;", function (err, results) 
 {
   if (err) 
   { 
@@ -100,7 +100,7 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 2;", function (err, resul
   });
 });
 
-db.query("SELECT * FROM `Producto` WHERE id_producto = 3;", function (err, results) 
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 3;", function (err, results) 
 {
   if (err) 
   { 
@@ -127,7 +127,7 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 3;", function (err, resul
   });
 });
 
-db.query("SELECT * FROM `Producto` WHERE id_producto = 4;", function (err, results) 
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 4;", function (err, results) 
 {
   if (err) 
   { 
@@ -154,7 +154,7 @@ db.query("SELECT * FROM `Producto` WHERE id_producto = 4;", function (err, resul
   });
 });
 
-db.query("SELECT * FROM `Producto` WHERE id_producto = 5;", function (err, results) 
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 5;", function (err, results) 
 {
   if (err) 
   { 
