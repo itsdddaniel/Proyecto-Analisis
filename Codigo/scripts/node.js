@@ -43,8 +43,9 @@ db.connect((err) =>
   { 
     throw err; 
   }
-  console.log("DB connection OK");
-  console.log("Para terminar la conexión: CTRL + C")
+  console.log("Conexión a la Base de Datos fue exitosa.");
+  console.log("En el navegador abrir: http://localhost:*puerto*");
+  console.log("Para terminar la conexión: CTRL + C.");
 });
 
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 1;", function (err, results) 
@@ -54,13 +55,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var phoneNames = []
-  var links = []
+  var phoneNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     phoneNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -70,7 +75,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/celulares'));
-    res.render('celulares.ejs', {data: phoneNames, data2: links}); 
+    res.render('celulares.ejs', {data: phoneNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -81,13 +86,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
     links[i] = results[i].urlProducto
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -97,7 +106,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/computadoras'));
-    res.render('computadoras.ejs', {data: consoleNames, data2: links}); 
+    res.render('computadoras.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -108,13 +117,18 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+
   }
   for(var j = 0; j<length; j++)
   {
@@ -124,7 +138,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/consolas'));
-    res.render('consolas.ejs', {data: consoleNames, data2: links}); 
+    res.render('consolas.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -137,11 +151,15 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
 
   var consoleNames = []
   var links = []
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -151,7 +169,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/laptops'));
-    res.render('laptops.ejs', {data: consoleNames, data2: links}); 
+    res.render('laptops.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -162,13 +180,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -178,7 +200,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/impresoras'));
-    res.render('impresoras.ejs', {data: consoleNames, data2: links}); 
+    res.render('impresoras.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -189,13 +211,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -205,7 +231,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/televisores'));
-    res.render('televisores.ejs', {data: consoleNames, data2: links}); 
+    res.render('televisores.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -216,13 +242,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -232,7 +262,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/parlantes'));
-    res.render('parlantes.ejs', {data: consoleNames, data2: links}); 
+    res.render('parlantes.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -243,13 +273,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -259,7 +293,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/tablets'));
-    res.render('tablets.ejs', {data: consoleNames, data2: links}); 
+    res.render('tablets.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -270,13 +304,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -286,7 +324,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/accesorios'));
-    res.render('accesorios.ejs', {data: consoleNames, data2: links}); 
+    res.render('accesorios.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -299,11 +337,15 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
 
   var consoleNames = []
   var links = []
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -313,7 +355,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/estufas'));
-    res.render('estufas.ejs', {data: consoleNames, data2: links}); 
+    res.render('estufas.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -324,13 +366,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -340,7 +386,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/lavadoras'));
-    res.render('lavadoras.ejs', {data: consoleNames, data2: links}); 
+    res.render('lavadoras.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -351,13 +397,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -367,7 +417,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/refrigeradoras'));
-    res.render('refrigeradoras.ejs', {data: consoleNames, data2: links}); 
+    res.render('refrigeradoras.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -378,13 +428,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -394,7 +448,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/microondas'));
-    res.render('microondas.ejs', {data: consoleNames, data2: links}); 
+    res.render('microondas.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
 
@@ -405,13 +459,17 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     throw err; 
   }
 
-  var consoleNames = []
-  var links = []
+  var consoleNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
     consoleNames[i] = results[i].nombre;
-    links[i] = results[i].urlProducto
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
   }
   for(var j = 0; j<length; j++)
   {
@@ -421,6 +479,6 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/planchas'));
-    res.render('planchas.ejs', {data: consoleNames, data2: links}); 
+    res.render('planchas.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
   });
 });
