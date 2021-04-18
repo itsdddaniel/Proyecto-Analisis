@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset ="UTF-8">
+        <meta name = "Author" content = "Daniel Arteaga">
+        <meta name = "Clase" content = "Análisis y Diseño de Sistemas">
+        <meta name = "Maestro" content = "Ingeniero Julio Sandoval">
+        <meta name = "Periodo" content = "I PAC 2021">
+        <link rel="stylesheet" href="/views/styles.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <header class="main-head">
+                <div id="logoID">
+                    <a href="/../index.html">
+                        <img src="/../images/Logo.png" alt="Proyecto Logo">
+                    </a>
+                </div>
+            </header>
+            <nav class="main-nav">
+                <details id="absoluteMenu">
+                    <summary>Categorías</summary>
+        
+                    <details id="secondLevelDetail">
+                        <summary>Electrodomésticos</summary>
+                        <a href="/views/estufas/">Estufas </a>
+                        <a href="/views/lavadoras/">Lavadoras </a>
+                        <a href="/views/refrigeradoras/">Refrigeradoras </a>
+                        <a href="/views/microondas/">Microondas </a>
+                        <a href="/views/planchas/">Planchas </a>
+                        <a href="/views/licuadoras/">Licuadoras </a>
+                        <a href="/views/hornos/">Hornos </a>
+                        <a href="/views/cafetera/">Cafetera </a>
+                        <a href="/views/aire/">Aire </a>
+                        <a href="/views/aspiradoras/">Aspiradoras </a>
+                    </details>
+                    <details id="thirdLevelDetail">
+                        <summary>Tecnología</summary>
+                        <a href="/views/celulares/">Celulares </a>
+                        <a href="/views/consolas/">Consolas </a>
+                        <a href="/views/computadoras/">Computadoras </a>
+                        <a href="/views/laptops/">Laptops </a>
+                        <a href="/views/impresoras/">Impresoras </a>
+                        <a href="/views/parlantes/">Parlantes </a>
+                        <a href="/views/tablets/">Tablets </a>
+                        <a href="/views/juegos/">Juegos </a>
+                        <a href="/views/accesorios/">Accesorios </a>
+                        <a href="/views/televisores/">Televisores </a>
+                    </details>
+                </details>
+            </nav>
+            <div class="container" id="container">
+
+            </div>
+            <aside class="side">
+                <label id="usernameID">Nombre de Usuario:</label><br>
+                <input id="usernameIDInput" type="text">
+                <br><label id="passwordID">Contraseña:</label><br>
+                <input id="passwordIDInput" type="password"><br>
+                <button type="submit">Ingresar</button>
+            </aside>
+            <footer class="main-footer">Derechos Reservados 2021</footer>
+        </div>
+    </body>
+    <script>
+        var name = "<%= data %>";
+        var link = "<%= data2 %>";
+        var resultTwo = link.split(",")
+        var result = name.split(",");
+        for(var i = 0; i<result.length; i++)
+        {
+            var label = document.createElement('label');
+            label.id = result[i];
+            label.innerHTML = result[i];
+            document.getElementById("container").appendChild(label);
+
+            addImg(resultTwo[i]);
+            
+        }
+        function addImg(result)
+        {
+            var image = document.createElement('img');
+            image.src = `${result}`;
+            image.style.display = "block";
+            image.style.marginLeft = "auto";
+            image.style.marginRight = "auto";
+            image.style.width = "55%";
+            document.getElementById("container").appendChild(image);
+        }
+    </script>
+</html>
