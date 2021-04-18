@@ -48,7 +48,7 @@ INSERT INTO Categoria(nombre) VALUES
 
 ;
 
-INSERT INTO Categoria_Producto(id_categoria) VALUES
+INSERT INTO Categoria_Producto(id_producto,id_categoria) VALUES
 
     (1),
     (2),
