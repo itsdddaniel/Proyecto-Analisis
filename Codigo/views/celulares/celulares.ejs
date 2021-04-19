@@ -101,7 +101,7 @@
                 button.innerText = "Detalles";
                 document.getElementById("container").appendChild(button);
 
-                var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span></div>`;
+                var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">${price}</div></div>`;
                 var divModal = document.createElement("div");
                 divModal.className = "modal";
                 divModal.id = `modal${count}`;
@@ -110,6 +110,12 @@
                 divModal.innerHTML = htmlString;
                 var spanStyle = document.getElementById(`close${count}`);
                 spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
+
+                var desc = document.getElementById(`desc${count}`);
+                desc.style.cssText = "position: relative; right: 20%; top: 50%;";
+
+                var price = document.getElementById(`price${count}`);
+                price.style.cssText = "position: relative; left: 20%; top: 45%;";
 
                 var modal = document.getElementById(`modal${count}`);
                 var btn = document.getElementById(`modalButton${count}`);
