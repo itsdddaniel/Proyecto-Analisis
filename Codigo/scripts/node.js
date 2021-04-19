@@ -2,7 +2,7 @@
  * ! Atender una página de HTML usando node.js
  * y de express.js para poder correr todos los
  * componentes de la página.
- * @author 
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
  * @date 15/04/2021
  * @version 1.0
  */
@@ -16,13 +16,13 @@ app.get('/', function(req, res) {
     res.redirect('index.html');
 });
 
-app.listen(8080);
+app.listen(8080); //Cambiar si el puerto 8080 esta ocupado.
 
 /**
  * ! Usando el modulo para conectarse a mysql
  * usando todos los datos de autenticación para
  * poder hacer consultas a una base de datos.
- * @author 
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
  * @date 15/04/2021
  * @version 1.0
  */
@@ -48,6 +48,13 @@ db.connect((err) =>
   console.log("Para terminar la conexión: CTRL + C.");
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los celulares.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 1;", function (err, results) 
 {
   if (err) 
@@ -79,6 +86,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las computadoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 2;", function (err, results) 
 {
   if (err) 
@@ -110,6 +124,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los consolas.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 3;", function (err, results) 
 {
   if (err) 
@@ -142,6 +163,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las laptops.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 4;", function (err, results) 
 {
   if (err) 
@@ -173,6 +201,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las impresoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 5;", function (err, results) 
 {
   if (err) 
@@ -204,6 +239,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los televisores.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 6;", function (err, results) 
 {
   if (err) 
@@ -235,6 +277,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los parlantes.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 7;", function (err, results) 
 {
   if (err) 
@@ -266,6 +315,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las tablets.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 8;", function (err, results) 
 {
   if (err) 
@@ -297,6 +353,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los accesorios.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 9;", function (err, results) 
 {
   if (err) 
@@ -328,6 +391,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las estufas.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 10;", function (err, results) 
 {
   if (err) 
@@ -359,6 +429,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las lavadoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 11;", function (err, results) 
 {
   if (err) 
@@ -390,6 +467,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las refrigeradoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 12;", function (err, results) 
 {
   if (err) 
@@ -421,6 +505,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los microondas.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 13;", function (err, results) 
 {
   if (err) 
@@ -452,6 +543,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las planchas.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 14;", function (err, results) 
 {
   if (err) 
@@ -483,6 +581,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las licuadoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 15;", function (err, results) 
 {
   if (err) 
@@ -514,7 +619,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
-
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los hornos.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 16;", function (err, results) 
 {
   if (err) 
@@ -546,6 +657,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las cafeteras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 17;", function (err, results) 
 {
   if (err) 
@@ -577,6 +695,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán las aspiradoras.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 18;", function (err, results) 
 {
   if (err) 
@@ -608,6 +733,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   });
 });
 
+/**
+ * ! Hace un query a la base de datos donde 
+ * los resultados serán los aires.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 19;", function (err, results) 
 {
   if (err) 
@@ -631,10 +763,10 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     links[j] = results[j].urlProducto
   }
-  app.get('/views/aspiradoras', function(req, res) 
+  app.get('/views/aire', function(req, res) 
   {
     app.set('view engine', 'ejs');
-    app.set('views', path.join(__dirname, '/../views/aspiradoras'));
-    res.render('aspiradoras.ejs', {data: airconditioning, data2: links, data3: details, data4: price}); 
+    app.set('views', path.join(__dirname, '/../views/aire'));
+    res.render('aire.ejs', {data: airconditioning, data2: links, data3: details, data4: price}); 
   });
 });
