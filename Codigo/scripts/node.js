@@ -482,3 +482,159 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     res.render('planchas.ejs', {data: ironNames, data2: links, data3: details, data4: price}); 
   });
 });
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 15;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var blenderNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    blenderNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/licuadoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/licuadoras'));
+    res.render('licuadoras.ejs', {data: blenderNames, data2: links, data3: details, data4: price}); 
+  });
+});
+
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 16;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var ovenNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    ovenNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/hornos', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/hornos'));
+    res.render('hornos.ejs', {data: ovenNames, data2: links, data3: details, data4: price}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 17;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var coffeeNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    coffeeNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/cafeteras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/cafeteras'));
+    res.render('cafeteras.ejs', {data: coffeeNames, data2: links, data3: details, data4: price}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 18;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var blowerNames = [];
+  var links = [];
+  var details = [];
+  var price = [];
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    blowerNames[i] = results[i].nombre;
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/aspiradoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/aspiradoras'));
+    res.render('aspiradoras.ejs', {data: blowerNames, data2: links, data3: details, data4: price}); 
+  });
+});
+
+db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_producto = Categoria_Producto.id_producto WHERE id_categoria = 19;", function (err, results) 
+{
+  if (err) 
+  { 
+    throw err; 
+  }
+
+  var airconditioning = [];
+  var links = [];
+  var details = [];
+  var price = [];
+  var length = Object.keys(results).length;
+  for(var i = 0; i<length; i++)
+  {
+    airconditioning[i] = results[i].nombre;
+    links[i] = results[i].urlProducto;
+    details[i] = results[i].Descripcion;
+    price[i] = results[i].PrecioVenta;
+  }
+  for(var j = 0; j<length; j++)
+  {
+    links[j] = results[j].urlProducto
+  }
+  app.get('/views/aspiradoras', function(req, res) 
+  {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '/../views/aspiradoras'));
+    res.render('aspiradoras.ejs', {data: airconditioning, data2: links, data3: details, data4: price}); 
+  });
+});
