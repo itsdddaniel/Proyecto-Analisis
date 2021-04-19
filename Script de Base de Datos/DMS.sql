@@ -49,7 +49,12 @@ INSERT INTO Categoria(nombre) VALUES
     ("Lavadora"),
     ("Refrigeradoras"),
     ("Microondas"),
-    ("Planchas")
+    ("Planchas"),
+    ("Licuadoras"),
+    ("Hornos"),
+    ("Cafeteras"),
+    ("Aspiradoras"),
+    ("Aires Acondicionados")
 
 ;
 
@@ -147,7 +152,37 @@ INSERT INTO Categoria_Producto(id_producto,id_categoria) VALUES
     (0502,14),
     (0503,14),
     (0504,14),
-    (0505,14)
+    (0505,14),
+
+    (0601,15),
+    (0701,15),
+    (0801,15),
+    (0901,15),
+    (0902,15),
+
+    (1001,16),
+    (1101,16),
+    (1201,16),
+    (1301,16),
+    (1401,16),
+
+    (1402,17),
+    (1403,17),
+    (1404,17),
+    (1501,17),
+    (2101,17),
+
+    (2201,18),
+    (2301,18),
+    (2401,18),
+    (2302,18),
+    (2303,18),
+
+    (2304,19),
+    (2406,19),
+    (2501,19),
+    (2403,19),
+    (2601,19)
 
 ;
 
@@ -287,6 +322,36 @@ INSERT INTO Producto(id_producto,id_marca,id_estado,id_novedad,nombre,PrecioComp
     (0502,1,1,1,"Plancha a Vapor Antiahderente Negra",200,550,NOW(),"https://drive.google.com/uc?id=1y6GZxFnFf5e21tm2hALF_QqqcmaiSsxE","Brinda años de servicio sobresaliente"),
     (0503,1,1,1,"Plancha de Vapor Blanco/Azul",85,150,NOW(),"https://drive.google.com/uc?id=1SMTVs4HGz7qwlrLA7JxRL-4ClVPB5I_O","Plancha a vapor para un mejor desempeño del planchado"),
     (0504,1,1,1,"Plancha Vapor Doble Capa Cerámica Rosa",600,895,NOW(),"https://drive.google.com/uc?id=1R4qEwnUEZ0BBKaEm9TBgy5yssCefPI_2","La suela de doble capa de cerámica brinda mejor cuidado de sus prendas"),
-    (0505,1,1,1,"Plancha de vapor inalámbrica base recargable",800,1295,NOW(),"https://drive.google.com/uc?id=14xq090Br1kxGjj-DZc5OjUrQopGZHzlK","Brinda excelente planchado con máxima comodidad")
+    (0505,1,1,1,"Plancha de vapor inalámbrica base recargable",800,1295,NOW(),"https://drive.google.com/uc?id=14xq090Br1kxGjj-DZc5OjUrQopGZHzlK","Brinda excelente planchado con máxima comodidad"),
 
+
+    (0601,1,1,1,"Licuadora Atma L18415N",109.17,144.72,NOW(),"","Capacidad de vaso :1.25 Lts Pica Hielo"),
+    (0701,1,1,1,"Licuadora Moulinex Lm284858",168.82,192.94,NOW(),"","Capacidad de vaso 2 Lts Pica Hielo no"),
+    (0801,1,1,1,"Licuadora CUISINART Cpb300ar",241.18,289.19,NOW(),"","Capacidad de vaso : 0.9 Lts Pica Hielo sí"),
+    (0901,1,1,1,"Licuadora KitchenAid KSB1585WH",578.41,626.89,NOW(),"","Capacidad de vaso : 1.75 Lts Pica Hielo : sí"),
+    (0902,1,1,1,"Licuadora Black & Decker BLX10F ",144.72,173.42,NOW(),"","Capacidad de vaso : 1.5 Lts Pica Hielo : sí"),
+
+    (1001,1,1,1,"Horno DOMEC MX60",2000.81,2411.82,NOW(),"","Potencia : 2380W"),
+    (1101,1,1,1,"Horno Longvie H1500G",3000.81,4411.82,NOW(),"","Potencia : 2380W"),
+    (1201,1,1,1,"Horno GE Appliances HG6035EVAI0",1808.97,2319.82,NOW(),"","Potencia : 1200W"),
+    (1301,1,1,1,"Horno eléctrico Axel AX-HCH45",1100.97,1319.82,NOW(),"","Potencia : 1900W"),
+    (1401,1,1,1,"Horno Eléctrico Atma HG4010N",602.97,1000.92,NOW(),"","Potencia : 1500W"),
+
+    (1402,1,1,1,"Express Atma CA9197XN Metálico",602.97,723.95,NOW(),"","Potencia : 1250 W"),
+    (1403,1,1,1,"Express Atma CA9197FF Metálico",500.97,625.95,NOW(),"","Potencia : 1000 W"),
+    (1404,1,1,1,"Cecotec Cafetera Express",602.97,723.95,NOW(),"","Potencia : 1250 W"),
+    (1501,1,1,1,"Cafetera Smartlife SL-CM9402",897.97,1025.95,NOW(),"","Capacidad: 1.5lts"),
+    (2101,1,1,1,"Cafetera de Filtro Kanji KJH-CMF0800S02",600.97,725.95,NOW(),"","Capacidad: 1.8lts"),
+
+    (2201,1,1,1,"Aspiradora Robótica Ecovacs Deboot N79W ",1447.17,1600.00,NOW(),"","Marca : Ecovacs origen : Argentina"),
+    (2301,1,1,1,"Aspiradora Industrial Karcher Nt38",2100.17,2300.00,NOW(),"","Marca : Karcher origen : China"),
+    (2401,1,1,1,"Aspiradora Liliana LA592",1100.17,1900.00,NOW(),"","Marca : Liliana origen : Argentina"),
+    (2302,1,1,1,"Aspiradora Industrial Karcher Nt70",3100.17,4500.00,NOW(),"","Marca : Karcher origen : China"),
+    (2303,1,1,1,"Aspiradora Fregadora Karcher FC 5",2100.17,3500.00,NOW(),"","Marca : Karcher origen : Alemania"),
+
+    (2304,1,1,1,"Aire Acondicionado Karcher FC 5",2100.17,3500.00,NOW(),"","Marca : Karcher origen : Alemania"),
+    (2406,1,1,1,"Split Inverter Sanyo 3300 W KCIN32HA3AN",2495.99,3100.99,NOW(),"","Marca : inverter"),
+    (2501,1,1,1,"Split Sanyo 3350 W KCS32HA3AN",3199.99,4200.99,NOW(),"","Marca : Sanyo"),
+    (2403,1,1,1,"Aire Acondicionado Split Frío/Calor BGH 3430 w Silent",3800.00,4200.00,NOW(),"","Marca : inverter"),
+    (2601,1,1,1,"Aire Acondicionado Split Samsung 3200 W Inverter AR12RSFQAWK",3600.00,4000.00,NOW(),"","Samsung")
 ;

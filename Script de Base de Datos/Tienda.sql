@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS Producto (
   id_marca INT NOT NULL,
   id_estado INT NOT NULL,
   id_novedad INT NOT NULL,
-  nombre VARCHAR(45) NOT NULL,
+  nombre VARCHAR(60) NOT NULL,	
   PrecioCompra FLOAT UNSIGNED NOT NULL,
   PrecioVenta FLOAT UNSIGNED NOT NULL,
   fechaEntrada DATETIME NOT NULL,
