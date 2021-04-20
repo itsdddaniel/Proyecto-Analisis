@@ -53,15 +53,29 @@
 
             </div>
             <aside class="side">
-                <label id="usernameID">Nombre de Usuario:</label><br>
-                <input id="usernameIDInput" type="text">
-                <br><label id="passwordID">Contraseña:</label><br>
-                <input id="passwordIDInput" type="password"><br>
-                <button type="submit">Ingresar</button>
+                <button id="login">Ingresar</button>
+                <div id="modalLogin" class="modalLogin">
+                    <div id="modalContentLogin" class="modalContentLogin">
+                        <span class="closeLogin">&times;</span>
+                        <label id="usernameID">Nombre de Usuario:</label><br>
+                        <input id="usernameIDInput" type="text">
+                        <br><label id="passwordID">Contraseña:</label><br>
+                        <input id="passwordIDInput" type="password"><br>
+                        <button type="submit">Ingresar</button>
+                    </div>
+                </div>
+
+                <button id="cart">Carrito</button>
+                <div id="modalCart" class="modalCart">
+                    <div id="modalContentCart" class="modalContentCart">
+                        <span class="closeCart">&times;</span>
+                    </div>
+                </div>
             </aside>
             <footer class="main-footer">Derechos Reservados 2021</footer>
         </div>
     </body>
+    <script src=../global.js></script>
     <script>
         var count = 0;
         var name = "<%= data %>";
