@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Categoria_Producto (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Novedad (
   idNovedad INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  tipoNovedad ENUM("Descuento"," ") DEFAULT " " NOT NULL
+  tipoNovedad ENUM("Descuento","Normal") DEFAULT "Normal" NOT NULL
 ) ENGINE = InnoDB;
 
 
@@ -142,9 +142,10 @@ CREATE TABLE IF NOT EXISTS Empleado (
   nombre VARCHAR(45) NOT NULL,
   Apellidos VARCHAR(45) NOT NULL,
   Pais VARCHAR(45) NOT NULL,
-  Imail VARCHAR(45) NOT NULL,
+  Email VARCHAR(45) NOT NULL,
   Telefono VARCHAR(45) NOT NULL,
   Direccion VARCHAR(45) NOT NULL,
+  contraseña VARCHAR(16) NOT NULL,
   id_Cargo INT NOT NULL,
 
     FOREIGN KEY (id_Cargo)
@@ -161,10 +162,11 @@ CREATE TABLE IF NOT EXISTS Cliente (
   nombre VARCHAR(45) NOT NULL,
   Apellidos VARCHAR(45) NOT NULL,
   Pais VARCHAR(45) NOT NULL,
-  Imail VARCHAR(45) NOT NULL,
+  Email VARCHAR(45) NOT NULL,
   Telefono VARCHAR(45) NOT NULL,
   Direccion VARCHAR(45) NOT NULL,
-  TipoPago ENUM("Efectivo") NULL
+  contraseña VARCHAR(16) NOT NULL,
+  TipoPago ENUM("Efectivo","Credito") DEFAULT "Credito"
 ) ENGINE = InnoDB;
 
 
