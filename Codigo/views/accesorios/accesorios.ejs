@@ -81,47 +81,57 @@
         {
             var cartDiv = document.getElementById("modalContentCart");
             var json = JSON.parse(localStorage.getItem('cart'));
-            var len = json.length;
-            if(len > 0)
+            try
             {
-                for (result of json)
+                var len = json.length;
+                if(len > 0)
                 {
-                    var htmlString = `<label id='labelProductName'>${result.productName} - L${result.productPrice}</label>`
-                    var label = document.createElement("label");
-                    label.id = result.productID;
-                    if(label.innerHTML.length == 0)
+                    for (result of json)
                     {
-                        var removeButton = `<button id='${result.productID}' onclick='deleteItem(this);'>Remover</button>`
-                        var breakLine = document.createElement("br");
-                        label.innerHTML = htmlString;
-                        cartDiv.appendChild(label);
-                        cartDiv.innerHTML += removeButton;
-                        cartDiv.appendChild(breakLine);
-                    }
-                    else
-                    {
-                        label.innerHTML = "";
-                        var removeButton = document.createElement("button");
-                        var breakLine = document.createElement("br");
-                        label.innerHTML = htmlString;
-                        removeButton.innerHTML = "Remover";
-                        cartDiv.appendChild(label);
-                        cartDiv.appendChild(removeButton);
-                        cartDiv.appendChild(breakLine);
-                        removeButton.onclick = function()
+                        var htmlString = `<label id='labelProductName'>${result.productName} - L${result.productPrice}</label>`
+                        var label = document.createElement("label");
+                        label.id = result.productID;
+                        if(label.innerHTML.length == 0)
                         {
-                            let productID = result.productID;
-                            const items = JSON.parse(localStorage.getItem('cart'));
-                            const filtered = items.filter(cart => cart.productID !== productID);
-                            localStorage.setItem('cart', JSON.stringify(filtered));
+                            var removeButton = `<button id='${result.productID}' onclick='deleteItem(this);'>Remover</button>`
+                            var breakLine = document.createElement("br");
+                            label.innerHTML = htmlString;
+                            cartDiv.appendChild(label);
+                            cartDiv.innerHTML += removeButton;
+                            cartDiv.appendChild(breakLine);
+                        }
+                        else
+                        {
                             label.innerHTML = "";
-                            cartDiv.removeChild(removeButton);
+                            var removeButton = document.createElement("button");
+                            var breakLine = document.createElement("br");
+                            label.innerHTML = htmlString;
+                            removeButton.innerHTML = "Remover";
+                            cartDiv.appendChild(label);
+                            cartDiv.appendChild(removeButton);
+                            cartDiv.appendChild(breakLine);
+                            removeButton.onclick = function()
+                            {
+                                let productID = result.productID;
+                                const items = JSON.parse(localStorage.getItem('cart'));
+                                const filtered = items.filter(cart => cart.productID !== productID);
+                                localStorage.setItem('cart', JSON.stringify(filtered));
+                                label.innerHTML = "";
+                                cartDiv.removeChild(removeButton);
+                            }
                         }
                     }
+                    updatePrice();
                 }
-                updatePrice();
+                else if (len == 0)
+                {
+                    var label = document.createElement("label");
+                    label.id = "emptyCart";
+                    label.innerHTML = "Carrito Vacio";
+                    cartDiv.appendChild(label);
+                }
             }
-            else if (len == 0)
+            catch
             {
                 var label = document.createElement("label");
                 label.id = "emptyCart";
@@ -225,22 +235,21 @@
                     }
                     cart.push({"productName": result, "productID": count, "productPrice": price});
                     localStorage.setItem("cart", JSON.stringify(cart));
-    
+                    
                     var htmlString = `<label id='labelProductName'>${result} - L${price}</label>`
                     var label = document.createElement("label");
                     label.innerHTML = htmlString;
-
+                    
                     var removeButton = document.createElement("button");
                     removeButton.innerHTML = "Remover";
                     removeButton.id = "remove";
-
+                    
                     var breakLine = document.createElement("br");
-
+                    
                     cartDiv.appendChild(label);
                     cartDiv.appendChild(removeButton);
                     cartDiv.appendChild(breakLine);
                     location.reload();
-
                 }
             }
         }
