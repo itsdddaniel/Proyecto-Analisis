@@ -76,7 +76,59 @@
         </div>
         <script src="../global.js"></script>
         <script>
-            var count = 0;
+            window.onload = function()
+            {
+                var cartDiv = document.getElementById("modalContentCart");
+                var json = JSON.parse(localStorage.getItem('cart'));
+                var len = json.length;
+                if(len > 0)
+                {
+                    for (result of json)
+                    {
+                        var htmlString = `<label id='labelProductName'>${result.productName} - L${result.productPrice}</label>`
+                        var label = document.createElement("label");
+                        label.id = result.productID;
+                        if(label.innerHTML.length == 0)
+                        {
+                            var removeButton = `<button id='${result.productID}' onclick='deleteItem(this);'>Remover</button>`
+                            var breakLine = document.createElement("br");
+                            label.innerHTML = htmlString;
+                            cartDiv.appendChild(label);
+                            cartDiv.innerHTML += removeButton;
+                            cartDiv.appendChild(breakLine);
+                        }
+                        else
+                        {
+                            label.innerHTML = "";
+                            var removeButton = document.createElement("button");
+                            var breakLine = document.createElement("br");
+                            label.innerHTML = htmlString;
+                            removeButton.innerHTML = "Remover";
+                            cartDiv.appendChild(label);
+                            cartDiv.appendChild(removeButton);
+                            cartDiv.appendChild(breakLine);
+                            removeButton.onclick = function()
+                            {
+                                let productID = result.productID;
+                                const items = JSON.parse(localStorage.getItem('cart'));
+                                const filtered = items.filter(cart => cart.productID !== productID);
+                                localStorage.setItem('cart', JSON.stringify(filtered));
+                                label.innerHTML = "";
+                                cartDiv.removeChild(removeButton);
+                            }
+                        }
+                    }
+                    updatePrice();
+                }
+                else if (len == 0)
+                {
+                    var label = document.createElement("label");
+                    label.id = "emptyCart";
+                    label.innerHTML = "Carrito Vacio";
+                    cartDiv.appendChild(label);
+                }
+            }
+            var count = 83;
             var name = "<%= data %>";
             var link = "<%= data2 %>";
             var description = "<%= data3 %>";
@@ -92,11 +144,11 @@
                 label.innerHTML = result[i];
                 document.getElementById("container").appendChild(label);
                 count = count + 1;
-
+    
                 addImg(resultTwo[i]);
                 addDetails(resultThree[i],resultFour[i],count);
-                addToCart(result,count);
-
+                addToCart(result[i],resultFour[i],count);
+    
             }
             function addImg(result)
             {
@@ -114,7 +166,7 @@
                 button.id = `modalButton${count}`;
                 button.innerText = "Detalles";
                 document.getElementById("container").appendChild(button);
-
+    
                 var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">${price}</div></div>`;
                 var divModal = document.createElement("div");
                 divModal.className = "modal";
@@ -124,13 +176,13 @@
                 divModal.innerHTML = htmlString;
                 var spanStyle = document.getElementById(`close${count}`);
                 spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
-
+    
                 var desc = document.getElementById(`desc${count}`);
                 desc.style.cssText = "width: 50%; height: 490px; background: #222230; float: left; color: white";
-
+    
                 var price = document.getElementById(`price${count}`);
                 price.style.cssText = "margin-left: 50%; height: 490px; background: #eb882c;";
-
+    
                 var modal = document.getElementById(`modal${count}`);
                 var btn = document.getElementById(`modalButton${count}`);
                 var span = document.getElementsByClassName(`close${count}`)[0];
@@ -138,18 +190,84 @@
                 {
                     modal.style.display = "block";
                 }
-
+    
                 span.onclick = function() 
                 {
                     modal.style.display = "none";
                 }
             }
-            function addToCart(result,count)
+            function addToCart(result,price,count)
             {
+                var cartDiv = document.getElementById("modalContentCart");
                 var addToCart = document.createElement("button");
                 addToCart.id = `addToCart${count}`;
                 addToCart.innerText = "Añadir al Carrito";
                 document.getElementById("container").appendChild(addToCart);
+    
+                addToCart.onclick = function()
+                {
+                    try
+                    {
+                        var emptyCart = document.getElementById("emptyCart");
+                        emptyCart.innerHTML = "";                 
+                    }
+                    catch
+                    {
+                        console.log("Pass");
+                    }
+                    if(addToCart.id == `addToCart${count}`) 
+                    {
+                        let cart = [];
+                        if(localStorage.getItem('cart'))
+                        {
+                            cart = JSON.parse(localStorage.getItem('cart'));
+                        }
+                        cart.push({"productName": result, "productID": count, "productPrice": price});
+                        localStorage.setItem("cart", JSON.stringify(cart));
+        
+                        var htmlString = `<label id='labelProductName'>${result} - L${price}</label>`
+                        var label = document.createElement("label");
+                        label.innerHTML = htmlString;
+    
+                        var removeButton = document.createElement("button");
+                        removeButton.innerHTML = "Remover";
+                        removeButton.id = "remove";
+    
+                        var breakLine = document.createElement("br");
+    
+                        cartDiv.appendChild(label);
+                        cartDiv.appendChild(removeButton);
+                        cartDiv.appendChild(breakLine);
+                        location.reload();
+    
+                    }
+                }
+            }
+            function deleteItem(e)
+            {
+                let name = e.previousSibling;
+                let id = Number(name.id);
+                const items = JSON.parse(localStorage.getItem('cart'));
+                const filtered = items.filter(cart => cart.productID !== id);
+                localStorage.setItem('cart', JSON.stringify(filtered));
+                location.reload();
+            } 
+            function updatePrice()
+            {
+                var json = JSON.parse(localStorage.getItem('cart'));
+                var totalLabel = document.createElement("totalPay");
+                var cartDiv = document.getElementById("modalContentCart");
+                let total = 0;
+                for(result of json)
+                {
+                    total = total + Number(result.productPrice);
+                }
+                totalLabel.innerHTML += `Total a pagar: L${total}`;
+                cartDiv.appendChild(totalLabel);
+    
+                var payButton = document.createElement("button");
+                payButton.innerHTML = "Pagar";
+                cartDiv.appendChild(payButton);
             }
         </script>
     </body>

@@ -6,6 +6,8 @@
  * @date 15/04/2021
  * @version 1.0
  */
+const open = require('open');
+const port = 8080; //Cambiar si el puerto 8080 esta ocupado.
 var express = require('express'),
     path = require('path'),
     app = express();
@@ -16,7 +18,8 @@ app.get('/', function(req, res) {
     res.redirect('index.html');
 });
 
-app.listen(8080); //Cambiar si el puerto 8080 esta ocupado.
+app.listen(port); 
+open(`http://localhost:${port}`);
 
 /**
  * ! Usando el modulo para conectarse a mysql
@@ -44,7 +47,6 @@ db.connect((err) =>
     throw err; 
   }
   console.log("Conexión a la Base de Datos fue exitosa.");
-  console.log("En el navegador abrir: http://localhost:*puerto*");
   console.log("Para terminar la conexión: CTRL + C.");
 });
 
