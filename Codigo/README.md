@@ -51,11 +51,15 @@ Correr el siguiente comando:
 
     npm install ejs
 
-### *Quinto pasos:*
+### *Quinto paso:*
+
+    npm install open
+
+### *Sexto paso:*
 
     node node.js
 
-Para correr la página y accerder desde el navegador con: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
+Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
 
 # Windows:
 Abrir una terminal en la carpeta de **Codigo/scripts** y hacer los siguientes pasos.
@@ -84,8 +88,12 @@ Correr el siguiente comando:
 
     npm install ejs
 
-### *Quinto pasos:*
+### *Quinto paso:*
+
+    npm install open
+
+### *Sexto paso:*
 
     node node.js
 
-Para correr la página y accerder desde el navegador con: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
+Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
