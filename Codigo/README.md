@@ -22,6 +22,7 @@
 -----
 Primero que todo se debe instalar nvm:
 
+    sudo apt install curl
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
 Una vez terminado, cerrar la terminal. Al volver abrirla verificar si se instalo usando el comando: *nvm --version*
@@ -61,6 +62,12 @@ Correr el siguiente comando:
     npm install open
 
 ### *Septimo paso:*
+-----
+Correr el siguiente comando:
+
+    npm install express-session
+
+### *Octavo paso:*
 -----
 Correr el siguiente comando:
 
@@ -104,6 +111,12 @@ Correr el siguiente comando:
     npm install open
 
 ### *Sexto paso:*
+-----
+Correr el siguiente comando:
+
+    npm install express-session
+
+### *Septimo paso:*
 -----
 Correr el siguiente comando:
 
