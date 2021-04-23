@@ -9,17 +9,17 @@
 const open = require('open');
 const port = 8080; //Cambiar si el puerto 8080 esta ocupado.
 var express = require('express'),
-    path = require('path'),
-    app = express();
+path = require('path'),
+session = require('express-session'),
+bodyParser = require('body-parser'),
+app = express();
+const router = express.Router();
 
 app.use(express.static(path.join(__dirname, '/../')));
 
 app.get('/', function(req, res) {
-    res.redirect('index.html');
+  res.redirect('index.html');
 });
-
-app.listen(port); 
-open(`http://localhost:${port}`);
 
 /**
  * ! Usando el modulo para conectarse a mysql
@@ -30,6 +30,7 @@ open(`http://localhost:${port}`);
  * @version 1.0
  */
 const mysql = require("mysql");
+const { Router } = require('express');
 const db = mysql.createConnection
 (
   {
@@ -49,6 +50,76 @@ db.connect((err) =>
   console.log("Conexión a la Base de Datos fue exitosa.");
   console.log("Para terminar la conexión: CTRL + C.");
 });
+
+
+/**
+ * ! Usando el modulo para de express session
+ * se crea una session, esto para saber cuando 
+ * el usuario esta logeado y cuando no lo esta.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
+app.use(session(
+{
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+app.get('/', function(request, response) 
+{
+	response.sendFile(path.join(__dirname + '/indexTwo.html'));
+});
+
+app.post('/login', function(request, response) 
+{
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) 
+  {
+		db.query('SELECT * FROM Cliente WHERE username = ? AND contraseña = ?', [username, password], function(error, results, fields) 
+    {
+      if (results.length > 0) 
+      {
+        request.session.loggedin = true;
+        request.session.username = username;
+        response.redirect('indexTwo.html');
+      } 
+      else 
+      {
+        response.send('Incorrect Username and/or Password!');
+      }			
+      response.end();
+		});
+	} 
+  else
+  {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
+app.get('/logout', function(req ,res)
+{
+  req.session.destroy(function(err)
+  {
+      if(err)
+      {
+        console.log(err);
+        res.send("Error")
+      }
+      else
+      {
+        res.redirect("index.html");
+      }
+  })
+})
+
+app.listen(port); 
+open(`http://localhost:${port}`);
+
 
 /**
  * ! Hace un query a la base de datos donde 
@@ -84,7 +155,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/celulares'));
-    res.render('celulares.ejs', {data: phoneNames, data2: links, data3: details, data4: price}); 
+    res.render('celulares.ejs', {data: phoneNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -122,7 +193,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/computadoras'));
-    res.render('computadoras.ejs', {data: desktopNames, data2: links, data3: details, data4: price}); 
+    res.render('computadoras.ejs', {data: desktopNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -161,7 +232,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/consolas'));
-    res.render('consolas.ejs', {data: consoleNames, data2: links, data3: details, data4: price}); 
+    res.render('consolas.ejs', {data: consoleNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -199,7 +270,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/laptops'));
-    res.render('laptops.ejs', {data: laptopNames, data2: links, data3: details, data4: price}); 
+    res.render('laptops.ejs', {data: laptopNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -237,7 +308,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/impresoras'));
-    res.render('impresoras.ejs', {data: printerNames, data2: links, data3: details, data4: price}); 
+    res.render('impresoras.ejs', {data: printerNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -275,7 +346,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/televisores'));
-    res.render('televisores.ejs', {data: tvNames, data2: links, data3: details, data4: price}); 
+    res.render('televisores.ejs', {data: tvNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -313,7 +384,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/parlantes'));
-    res.render('parlantes.ejs', {data: speakerNames, data2: links, data3: details, data4: price}); 
+    res.render('parlantes.ejs', {data: speakerNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -351,7 +422,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/tablets'));
-    res.render('tablets.ejs', {data: tabletNames, data2: links, data3: details, data4: price}); 
+    res.render('tablets.ejs', {data: tabletNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -389,7 +460,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/accesorios'));
-    res.render('accesorios.ejs', {data: accesoriesNames, data2: links, data3: details, data4: price}); 
+    res.render('accesorios.ejs', {data: accesoriesNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -427,7 +498,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/estufas'));
-    res.render('estufas.ejs', {data: stoveNames, data2: links, data3: details, data4: price}); 
+    res.render('estufas.ejs', {data: stoveNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -465,7 +536,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/lavadoras'));
-    res.render('lavadoras.ejs', {data: washingNames, data2: links, data3: details, data4: price}); 
+    res.render('lavadoras.ejs', {data: washingNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -503,7 +574,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/refrigeradoras'));
-    res.render('refrigeradoras.ejs', {data: refrigeratorNames, data2: links, data3: details, data4: price}); 
+    res.render('refrigeradoras.ejs', {data: refrigeratorNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -541,7 +612,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/microondas'));
-    res.render('microondas.ejs', {data: microwaveNames, data2: links, data3: details, data4: price}); 
+    res.render('microondas.ejs', {data: microwaveNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -579,7 +650,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/planchas'));
-    res.render('planchas.ejs', {data: ironNames, data2: links, data3: details, data4: price}); 
+    res.render('planchas.ejs', {data: ironNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -617,7 +688,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/licuadoras'));
-    res.render('licuadoras.ejs', {data: blenderNames, data2: links, data3: details, data4: price}); 
+    res.render('licuadoras.ejs', {data: blenderNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -655,7 +726,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/hornos'));
-    res.render('hornos.ejs', {data: ovenNames, data2: links, data3: details, data4: price}); 
+    res.render('hornos.ejs', {data: ovenNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -693,7 +764,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/cafeteras'));
-    res.render('cafeteras.ejs', {data: coffeeNames, data2: links, data3: details, data4: price}); 
+    res.render('cafeteras.ejs', {data: coffeeNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -731,7 +802,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/aspiradoras'));
-    res.render('aspiradoras.ejs', {data: blowerNames, data2: links, data3: details, data4: price}); 
+    res.render('aspiradoras.ejs', {data: blowerNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
 
@@ -769,6 +840,6 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   {
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '/../views/aire'));
-    res.render('aire.ejs', {data: airconditioning, data2: links, data3: details, data4: price}); 
+    res.render('aire.ejs', {data: airconditioning, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
   });
 });
