@@ -1,0 +1,234 @@
+html, body 
+{
+    margin: 0px;
+    background: #fffcfb;
+}
+
+label
+{
+    color: white;
+}
+
+button
+{
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    margin:10px 10px 50px 20px;
+    width: 95%;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.side > input
+{
+    width: 140px;
+    position: relative;
+}
+
+.main-head 
+{
+    grid-area: header;
+    background: #fffcfb;
+}
+.content 
+{
+    grid-area: slideshow-container;
+}
+.main-nav 
+{
+    grid-area: nav;
+    background: #eb882c;
+}
+.side
+{
+    grid-area: sidebar;
+    text-align: center;
+    background: #222230;
+}
+
+.main-footer 
+{
+    grid-area: footer;
+    text-align: center;
+    background: #fffcfb;
+}
+
+.wrapper 
+{
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-areas:
+    "nav header  sidebar"
+    "nav    slideshow-container sidebar"
+    "nav    slideshow-container sidebar"
+    "nav footer  sidebar"
+}
+
+@media (min-width: 1224px) 
+{
+    .wrapper 
+    {
+      grid-template-columns: 1fr 3fr 1fr;
+      width: 99vw;
+      height: 100vh;
+      grid-template-areas:
+        "nav header  sidebar"
+        "nav    slideshow-container sidebar"
+        "nav    slideshow-container sidebar"
+        "nav footer  sidebar"
+     }
+     nav details 
+     {
+       flex-direction: column;
+     }
+}
+
+/*
+    Definiendo el estilo del botón de Menu.
+*/
+#absoluteMenu > summary 
+{
+    cursor: pointer;
+    text-align: center;
+    background: #282828;
+    color: white;
+    margin: 6px;
+    padding: 8px;
+}
+
+#absoluteMenu > summary:hover
+{
+    background: #3d3d3d;
+}
+
+#absoluteMenu > summary
+{
+    display: block;
+}
+
+/*
+    Definiendo el estilo del botón de Electrodomestricos.
+*/
+#secondLevelDetail > summary
+{
+    cursor: pointer;
+    text-align: center;
+    background: #282828;
+    color: white;
+    margin: 3px 6px 3px 18px;
+    padding: 8px;
+}
+
+#secondLevelDetail > summary:hover
+{
+    background: #3d3d3d;
+}
+
+#secondLevelDetail > summary
+{
+    display: block;
+}
+
+#secondLevelDetail > a
+{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #282828;
+    color: white;
+    font-size: 15px;
+    margin: 3px 6px 3px 28px;
+    padding: 4px;
+}
+
+#secondLevelDetail > a:hover
+{
+    background: #3d3d3d;
+}
+
+/*
+    Definiendo el estilo del botón de Tecnologia.
+*/
+#thirdLevelDetail > summary
+{
+    cursor: pointer;
+    text-align: center;
+    background: #282828;
+    color: white;
+    margin: 3px 6px 3px 18px;
+    padding: 8px;
+}
+
+#thirdLevelDetail > summary:hover
+{
+    background: #3d3d3d;
+}
+
+#thirdLevelDetail > summary
+{
+    display: block;
+}
+
+#thirdLevelDetail > a
+{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    background: #282828;
+    color: white;
+    font-size: 15px;
+    margin: 3px 6px 3px 28px;
+    padding: 4px;
+}
+
+#thirdLevelDetail > a:hover
+{
+    background: #3d3d3d;
+}
+
+/*
+    Posición del logo.
+*/
+#logoID
+{
+    width: 85%;
+    padding: 10px;
+}
+
+/*
+    Definiendo el estilo para todos los boxes.
+*/
+
+*
+{
+    box-sizing:border-box;
+}
+
+/* 
+    Contenedor del slideshow. 
+*/
+.slideshow-container 
+{
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+  background: #fffcfb;
+}
+.slideshow-container  input[type="password"],
+.slideshow-container  input[type="text"] 
+{
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    margin-bottom: 15px;
+    box-sizing:border-box;
+}
