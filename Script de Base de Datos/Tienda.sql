@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS Cliente (
   Email VARCHAR(45) NOT NULL,
   Telefono VARCHAR(45) NOT NULL,
   Direccion VARCHAR(45) NOT NULL,
+  username VARCHAR(45) NOT NULL,
   contraseña VARCHAR(16) NOT NULL,
   TipoPago ENUM("Efectivo","Credito") DEFAULT "Credito"
 ) ENGINE = InnoDB;

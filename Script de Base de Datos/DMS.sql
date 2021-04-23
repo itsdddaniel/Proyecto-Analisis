@@ -130,11 +130,11 @@ INSERT INTO Empleado(dni,nombre,Apellidos,Pais,Email,Telefono,Direccion,contrase
     ("0801199209215","Rosa","Quiñonez","Honduras","rosita25@gmail.com","99784512","Col Miraflorez","02145",4)
 ;
 
-INSERT INTO Cliente(dni,nombre,Apellidos,Pais,Email,Telefono,Direccion,contraseña,TipoPago) VALUES
-    ("0301198212312","Pedro","Garcia","Honduras","pgarcia@gmail.com","33857413","Res. Las Uvas","12345","Credito"),
-    ("0501197801234","Juan","Lopez","Honduras","jlopez@gmail.com","98754132","Col. Miramontes","Corazoncitos","Credito"),
-    ("0802199799999","Alejandro","Lara","Honduras","lara98@gmail.com","95248762","Res Las Lomas","Supersayian2","Credito"),
-    ("0102199512341","Erick","Lopez","Honduras","erick_11@gmail.com","97256481","Res. Las Uvas","hondurasforever","Credito")
+INSERT INTO Cliente(dni,nombre,Apellidos,Pais,Email,Telefono,Direccion,username,contraseña,TipoPago) VALUES
+    ("0301198212312","Pedro","Garcia","Honduras","pgarcia@gmail.com","33857413","Res. Las Uvas","Pedrito99","12345","Credito"),
+    ("0501197801234","Juan","Lopez","Honduras","jlopez@gmail.com","98754132","Col. Miramontes","Juancito_124","Corazoncitos","Credito"),
+    ("0802199799999","Alejandro","Lara","Honduras","lara98@gmail.com","95248762","Res Las Lomas","AleLara98","Supersayian2","Credito"),
+    ("0102199512341","Erick","Lopez","Honduras","erick_11@gmail.com","97256481","Res. Las Uvas","Ericksito_1999","hondurasforever","Credito")
 ;
 
 INSERT INTO Producto(id_producto,id_marca,id_estado,id_novedad,nombre,PrecioCompra,PrecioVenta,fechaEntrada,urlProducto,Descripcion) VALUES
