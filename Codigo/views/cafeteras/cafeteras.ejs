@@ -1,284 +1,233 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset ="UTF-8">
-        <meta name = "Author" content = "Daniel Arteaga">
-        <meta name = "Clase" content = "Análisis y Diseño de Sistemas">
-        <meta name = "Maestro" content = "Ingeniero Julio Sandoval">
-        <meta name = "Periodo" content = "I PAC 2021">
-        <link rel="stylesheet" href="/views/styles.css">
-    </head>
-    <body>
-        <div class="wrapper">
-            <header class="main-head">
-                <div id="logoID">
-                    <a href="/../index.html">
-                        <img src="/../images/Logo.png" alt="Proyecto Logo">
-                    </a>
-                </div>
-            </header>
-            <nav class="main-nav">
-                <details id="absoluteMenu">
-                    <summary>Categorías</summary>
-        
-                    <details id="secondLevelDetail">
-                        <summary>Electrodomésticos</summary>
-                        <a href="/views/estufas/">Estufas </a>
-                        <a href="/views/lavadoras/">Lavadoras </a>
-                        <a href="/views/refrigeradoras/">Refrigeradoras </a>
-                        <a href="/views/microondas/">Microondas </a>
-                        <a href="/views/planchas/">Planchas </a>
-                        <a href="/views/licuadoras/">Licuadoras </a>
-                        <a href="/views/hornos/">Hornos </a>
-                        <a href="/views/cafeteras">Cafetera </a>
-                        <a href="/views/aire/">Aire </a>
-                        <a href="/views/aspiradoras/">Aspiradoras </a>
-                    </details>
-                    <details id="thirdLevelDetail">
-                        <summary>Tecnología</summary>
-                        <a href="/views/celulares/">Celulares </a>
-                        <a href="/views/consolas/">Consolas </a>
-                        <a href="/views/computadoras/">Computadoras </a>
-                        <a href="/views/laptops/">Laptops </a>
-                        <a href="/views/impresoras/">Impresoras </a>
-                        <a href="/views/parlantes/">Parlantes </a>
-                        <a href="/views/tablets/">Tablets </a>
-                        <a href="/views/juegos/">Juegos </a>
-                        <a href="/views/accesorios/">Accesorios </a>
-                        <a href="/views/televisores/">Televisores </a>
-                    </details>
-                </details>
-            </nav>
-            <div class="container" id="container">
+<%- include('../header.ejs') -%>
+<script src="../global.js"></script>
+<script>
+    window.onload = function()
+    {
+        var test = "<%= session %>";
+        var aside = document.getElementById('side');
 
-            </div>
-            <aside class="side">
-                <button id="login">Ingresar</button>
-                <div id="modalLogin" class="modalLogin">
-                    <div id="modalContentLogin" class="modalContentLogin">
-                        <span class="closeLogin">&times;</span>
-                        <label id="usernameID">Nombre de Usuario:</label><br>
-                        <input id="usernameIDInput" type="text">
-                        <br><label id="passwordID">Contraseña:</label><br>
-                        <input id="passwordIDInput" type="password"><br>
-                        <button type="submit">Ingresar</button>
-                    </div>
-                </div>
-
-                <button id="cart">Carrito</button>
-                <div id="modalCart" class="modalCart">
-                    <div id="modalContentCart" class="modalContentCart">
-                        <span class="closeCart">&times;</span>
-                    </div>
-                </div>
-            </aside>
-            <footer class="main-footer">Derechos Reservados 2021</footer>
-        </div>
-        <script src="../global.js"></script>
-        <script>
-            window.onload = function()
+        if(test == "true")
+        {
+            console.log("logged in");
+            var logout = document.createElement('button');
+            logout.innerHTML = "Salir";
+            logout.id = "logoutButton";
+            logout.onclick = function()
             {
-                var cartDiv = document.getElementById("modalContentCart");
-                var json = JSON.parse(localStorage.getItem('cart'));
-                try
+                location.href = "/logout";
+            }
+            aside.appendChild(logout);
+        }
+        else
+        {
+            var button = document.createElement('button');
+            button.innerHTML = "Ingresar";
+            button.onclick = function()
+            {
+                location.href = "/../index.html";
+            }
+            aside.appendChild(button);
+        }
+        var cartDiv = document.getElementById("modalContentCart");
+        var json = JSON.parse(localStorage.getItem('cart'));
+        try
+        {
+            var len = json.length;
+            if(len > 0)
+            {
+                for (result of json)
                 {
-                    var len = json.length;
-                    if(len > 0)
-                    {
-                        for (result of json)
-                        {
-                            var htmlString = `<label id='labelProductName'>${result.productName} - L${result.productPrice}</label>`
-                            var label = document.createElement("label");
-                            label.id = result.productID;
-                            if(label.innerHTML.length == 0)
-                            {
-                                var removeButton = `<button id='${result.productID}' onclick='deleteItem(this);'>Remover</button>`
-                                var breakLine = document.createElement("br");
-                                label.innerHTML = htmlString;
-                                cartDiv.appendChild(label);
-                                cartDiv.innerHTML += removeButton;
-                                cartDiv.appendChild(breakLine);
-                            }
-                            else
-                            {
-                                label.innerHTML = "";
-                                var removeButton = document.createElement("button");
-                                var breakLine = document.createElement("br");
-                                label.innerHTML = htmlString;
-                                removeButton.innerHTML = "Remover";
-                                cartDiv.appendChild(label);
-                                cartDiv.appendChild(removeButton);
-                                cartDiv.appendChild(breakLine);
-                                removeButton.onclick = function()
-                                {
-                                    let productID = result.productID;
-                                    const items = JSON.parse(localStorage.getItem('cart'));
-                                    const filtered = items.filter(cart => cart.productID !== productID);
-                                    localStorage.setItem('cart', JSON.stringify(filtered));
-                                    label.innerHTML = "";
-                                    cartDiv.removeChild(removeButton);
-                                }
-                            }
-                        }
-                        updatePrice();
-                    }
-                    else if (len == 0)
-                    {
-                        var label = document.createElement("label");
-                        label.id = "emptyCart";
-                        label.innerHTML = "Carrito Vacio";
-                        cartDiv.appendChild(label);
-                    }
-                }
-                catch
-                {
+                    var htmlString = `<label id='labelProductName'>${result.productName} - L${result.productPrice}</label>`
                     var label = document.createElement("label");
-                    label.id = "emptyCart";
-                    label.innerHTML = "Carrito Vacio";
-                    cartDiv.appendChild(label);
-                }
-            }
-            var count = 16;
-            var name = "<%= data %>";
-            var link = "<%= data2 %>";
-            var description = "<%= data3 %>";
-            var price = "<%= data4 %>";
-            var result = name.split(",");
-            var resultTwo = link.split(",")
-            var resultThree = description.split(",");
-            var resultFour = price.split(",");
-            for(var i = 0; i<result.length; i++)
-            {
-                var label = document.createElement('label');
-                label.id = result[i];
-                label.innerHTML = result[i];
-                document.getElementById("container").appendChild(label);
-                count = count + 1;
-    
-                addImg(resultTwo[i]);
-                addDetails(resultThree[i],resultFour[i],count);
-                addToCart(result[i],resultFour[i],count);
-    
-            }
-            function addImg(result)
-            {
-                var image = document.createElement('img');
-                image.src = `${result}`;
-                image.style.display = "block";
-                image.style.marginLeft = "auto";
-                image.style.marginRight = "auto";
-                image.style.width = "55%";
-                document.getElementById("container").appendChild(image);
-            }
-            function addDetails(description,price,count)
-            {
-                var button = document.createElement("button");
-                button.id = `modalButton${count}`;
-                button.innerText = "Detalles";
-                document.getElementById("container").appendChild(button);
-    
-                var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">${price}</div></div>`;
-                var divModal = document.createElement("div");
-                divModal.className = "modal";
-                divModal.id = `modal${count}`;
-                divModal.style.cssText = "display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%;  height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);";
-                document.getElementById("container").appendChild(divModal);
-                divModal.innerHTML = htmlString;
-                var spanStyle = document.getElementById(`close${count}`);
-                spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
-    
-                var desc = document.getElementById(`desc${count}`);
-                desc.style.cssText = "width: 50%; height: 490px; background: #222230; float: left; color: white";
-    
-                var price = document.getElementById(`price${count}`);
-                price.style.cssText = "margin-left: 50%; height: 490px; background: #eb882c;";
-    
-                var modal = document.getElementById(`modal${count}`);
-                var btn = document.getElementById(`modalButton${count}`);
-                var span = document.getElementsByClassName(`close${count}`)[0];
-                btn.onclick = function() 
-                {
-                    modal.style.display = "block";
-                }
-    
-                span.onclick = function() 
-                {
-                    modal.style.display = "none";
-                }
-            }
-            function addToCart(result,price,count)
-            {
-                var cartDiv = document.getElementById("modalContentCart");
-                var addToCart = document.createElement("button");
-                addToCart.id = `addToCart${count}`;
-                addToCart.innerText = "Añadir al Carrito";
-                document.getElementById("container").appendChild(addToCart);
-    
-                addToCart.onclick = function()
-                {
-                    try
+                    label.id = result.productID;
+                    if(label.innerHTML.length == 0)
                     {
-                        var emptyCart = document.getElementById("emptyCart");
-                        emptyCart.innerHTML = "";                 
-                    }
-                    catch
-                    {
-                        console.log("Pass");
-                    }
-                    if(addToCart.id == `addToCart${count}`) 
-                    {
-                        let cart = [];
-                        if(localStorage.getItem('cart'))
-                        {
-                            cart = JSON.parse(localStorage.getItem('cart'));
-                        }
-                        cart.push({"productName": result, "productID": count, "productPrice": price});
-                        localStorage.setItem("cart", JSON.stringify(cart));
-        
-                        var htmlString = `<label id='labelProductName'>${result} - L${price}</label>`
-                        var label = document.createElement("label");
-                        label.innerHTML = htmlString;
-    
-                        var removeButton = document.createElement("button");
-                        removeButton.innerHTML = "Remover";
-                        removeButton.id = "remove";
-    
+                        var removeButton = `<button id='${result.productID}' onclick='deleteItem(this);'>Remover</button>`
                         var breakLine = document.createElement("br");
-    
+                        label.innerHTML = htmlString;
+                        cartDiv.appendChild(label);
+                        cartDiv.innerHTML += removeButton;
+                        cartDiv.appendChild(breakLine);
+                    }
+                    else
+                    {
+                        label.innerHTML = "";
+                        var removeButton = document.createElement("button");
+                        var breakLine = document.createElement("br");
+                        label.innerHTML = htmlString;
+                        removeButton.innerHTML = "Remover";
                         cartDiv.appendChild(label);
                         cartDiv.appendChild(removeButton);
                         cartDiv.appendChild(breakLine);
-                        location.reload();
-    
+                        removeButton.onclick = function()
+                        {
+                            let productID = result.productID;
+                            const items = JSON.parse(localStorage.getItem('cart'));
+                            const filtered = items.filter(cart => cart.productID !== productID);
+                            localStorage.setItem('cart', JSON.stringify(filtered));
+                            label.innerHTML = "";
+                            cartDiv.removeChild(removeButton);
+                        }
                     }
                 }
+                updatePrice();
             }
-            function deleteItem(e)
+            else if (len == 0)
             {
-                let name = e.previousSibling;
-                let id = Number(name.id);
-                const items = JSON.parse(localStorage.getItem('cart'));
-                const filtered = items.filter(cart => cart.productID !== id);
-                localStorage.setItem('cart', JSON.stringify(filtered));
-                location.reload();
-            } 
-            function updatePrice()
+                var label = document.createElement("label");
+                label.id = "emptyCart";
+                label.innerHTML = "Carrito Vacio";
+                cartDiv.appendChild(label);
+            }
+        }
+        catch
+        {
+            var label = document.createElement("label");
+            label.id = "emptyCart";
+            label.innerHTML = "Carrito Vacio";
+            cartDiv.appendChild(label);
+        }
+    }
+    var count = 16;
+    var name = "<%= data %>";
+    var link = "<%= data2 %>";
+    var description = "<%= data3 %>";
+    var price = "<%= data4 %>";
+    var result = name.split(",");
+    var resultTwo = link.split(",")
+    var resultThree = description.split(",");
+    var resultFour = price.split(",");
+    for(var i = 0; i<result.length; i++)
+    {
+        var label = document.createElement('label');
+        label.id = result[i];
+        label.innerHTML = result[i];
+        document.getElementById("container").appendChild(label);
+        count = count + 1;
+
+        addImg(resultTwo[i]);
+        addDetails(resultThree[i],resultFour[i],count);
+        addToCart(result[i],resultFour[i],count);
+
+    }
+    function addImg(result)
+    {
+        var image = document.createElement('img');
+        image.src = `${result}`;
+        image.style.display = "block";
+        image.style.marginLeft = "auto";
+        image.style.marginRight = "auto";
+        image.style.width = "55%";
+        document.getElementById("container").appendChild(image);
+    }
+    function addDetails(description,price,count)
+    {
+        var button = document.createElement("button");
+        button.id = `modalButton${count}`;
+        button.innerText = "Detalles";
+        document.getElementById("container").appendChild(button);
+
+        var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">${price}</div></div>`;
+        var divModal = document.createElement("div");
+        divModal.className = "modal";
+        divModal.id = `modal${count}`;
+        divModal.style.cssText = "display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%;  height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);";
+        document.getElementById("container").appendChild(divModal);
+        divModal.innerHTML = htmlString;
+        var spanStyle = document.getElementById(`close${count}`);
+        spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
+
+        var desc = document.getElementById(`desc${count}`);
+        desc.style.cssText = "width: 50%; height: 490px; background: #222230; float: left; color: white";
+
+        var price = document.getElementById(`price${count}`);
+        price.style.cssText = "margin-left: 50%; height: 490px; background: #eb882c;";
+
+        var modal = document.getElementById(`modal${count}`);
+        var btn = document.getElementById(`modalButton${count}`);
+        var span = document.getElementsByClassName(`close${count}`)[0];
+        btn.onclick = function() 
+        {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+    }
+    function addToCart(result,price,count)
+    {
+        var cartDiv = document.getElementById("modalContentCart");
+        var addToCart = document.createElement("button");
+        addToCart.id = `addToCart${count}`;
+        addToCart.innerText = "Añadir al Carrito";
+        document.getElementById("container").appendChild(addToCart);
+
+        addToCart.onclick = function()
+        {
+            try
             {
-                var json = JSON.parse(localStorage.getItem('cart'));
-                var totalLabel = document.createElement("totalPay");
-                var cartDiv = document.getElementById("modalContentCart");
-                let total = 0;
-                for(result of json)
+                var emptyCart = document.getElementById("emptyCart");
+                emptyCart.innerHTML = "";                 
+            }
+            catch
+            {
+                console.log("Pass");
+            }
+            if(addToCart.id == `addToCart${count}`) 
+            {
+                let cart = [];
+                if(localStorage.getItem('cart'))
                 {
-                    total = total + Number(result.productPrice);
+                    cart = JSON.parse(localStorage.getItem('cart'));
                 }
-                totalLabel.innerHTML += `Total a pagar: L${total}`;
-                cartDiv.appendChild(totalLabel);
-    
-                var payButton = document.createElement("button");
-                payButton.innerHTML = "Pagar";
-                cartDiv.appendChild(payButton);
+                cart.push({"productName": result, "productID": count, "productPrice": price});
+                localStorage.setItem("cart", JSON.stringify(cart));
+
+                var htmlString = `<label id='labelProductName'>${result} - L${price}</label>`
+                var label = document.createElement("label");
+                label.innerHTML = htmlString;
+
+                var removeButton = document.createElement("button");
+                removeButton.innerHTML = "Remover";
+                removeButton.id = "remove";
+
+                var breakLine = document.createElement("br");
+
+                cartDiv.appendChild(label);
+                cartDiv.appendChild(removeButton);
+                cartDiv.appendChild(breakLine);
+                location.reload();
+
             }
-        </script>
-    </body>
-</html>
+        }
+    }
+    function deleteItem(e)
+    {
+        let name = e.previousSibling;
+        let id = Number(name.id);
+        const items = JSON.parse(localStorage.getItem('cart'));
+        const filtered = items.filter(cart => cart.productID !== id);
+        localStorage.setItem('cart', JSON.stringify(filtered));
+        location.reload();
+    } 
+    function updatePrice()
+    {
+        var json = JSON.parse(localStorage.getItem('cart'));
+        var totalLabel = document.createElement("totalPay");
+        var cartDiv = document.getElementById("modalContentCart");
+        let total = 0;
+        for(result of json)
+        {
+            total = total + Number(result.productPrice);
+        }
+        totalLabel.innerHTML += `Total a pagar: L${total}`;
+        cartDiv.appendChild(totalLabel);
+
+        var payButton = document.createElement("button");
+        payButton.innerHTML = "Pagar";
+        cartDiv.appendChild(payButton);
+    }
+</script>
+<%- include('../footer.ejs') -%>
