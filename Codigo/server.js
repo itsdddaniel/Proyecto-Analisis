@@ -30,9 +30,9 @@ app.use(session(
   resave: false,
   saveUninitialized: false
 }));
+app.use(flash());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
-app.use(flash());
 app.use(express.static(__dirname, + '/Codigo'));
 app.set('view engine', 'ejs');
 
@@ -95,11 +95,11 @@ app.get('/mainpage',function(req,res,next)
 })
 app.get('/indexTwo',function(req,res,next)
 {
-  res.render("indexTwo", {sucessMessage: req.flash('sucessMessage')});
+  res.render("indexTwo", {sucessMessage: req.flash('sucessMessage'),checkoutSucess: req.flash('checkoutSucess'),registerSucess: req.flash('registerSucess')});
 })
-app.get('/checkoutDone',function(req,res,next)
+app.get('/index',function(req,res,next)
 {
-  res.render("checkoutDone", {checkoutSucess: req.flash('checkoutSucess')});
+  res.render("index",{errorMessage: req.flash('errorMessage'),logoutMessage: req.flash('logoutMessage')});
 })
 app.get('/loginPage',function(req,res,next)
 {
@@ -127,8 +127,8 @@ app.post('/login', function(request, response)
       } 
       else 
       {
-        //request.flash('errorMessage','Usuario y/o Contraseña incorrecta.');
-        response.render("index");
+        request.flash('errorMessage','Usuario y/o Contraseña incorrecta.');
+        response.redirect("index");
       }			
       response.end();
 		});
@@ -142,19 +142,12 @@ app.post('/login', function(request, response)
 
 app.get('/logout', function(req ,res)
 {
-  req.session.destroy(function(err)
+  if(req.session.loggedin == true)
   {
-      if(err)
-      {
-        console.log(err);
-        res.send("Error")
-      }
-      else
-      {
-        //req.flash('logoutMessage',"Se ha desconectado existosamente.");
-        res.render("index");
-      }
-  })
+    req.session.loggedin = false;
+    req.flash('logoutMessage','Se ha desconectado satisfactoriamente.');
+    res.redirect('index');
+  }
 });
 
 app.get('/checkout', function(req ,res)
@@ -204,8 +197,8 @@ app.post('/pay', function(req ,res)
             else
             {
               req.session.loggedin = true;
-              req.flash('checkoutSucess',"Se ha realizado la compra, gracias por preferirnos!.");
-              res.redirect('checkoutDone');
+              req.flash('checkoutSucess',"Se ha realizado la compra, gracias por preferirnos!");
+              res.redirect('indexTwo');
             }
           });
         }
@@ -240,7 +233,8 @@ app.post('/register', function(req,res)
     {
       req.session.loggedin = true;
       req.session.username = username;
-      res.render('indexTwo');
+      req.flash('registerSucess',"Te has registrado satisfactoriamente, puedes empezar a navegar en nuestra tienda!");
+      res.redirect('indexTwo');
     }
   });
 });

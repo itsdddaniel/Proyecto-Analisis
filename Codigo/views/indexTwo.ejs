@@ -48,6 +48,20 @@
                 </details>
             </nav>
             <div class="slideshow-container">
+                <% try { %>
+                    <% if ( sucessMessage.length > 0 ) { %>
+                        <div class="alert"><%= sucessMessage %> </div>
+                      <% } %>
+                    <% if ( checkoutSucess.length > 0 ) { %>
+                        <div class="alertTwo"><%= checkoutSucess %> </div>
+                    <% } %>
+                    <% if ( registerSucess.length > 0 ) { %>
+                        <div class="alertTwo"><%= registerSucess %> </div>
+                    <% } %>
+                <% } catch { %>
+                    <div>
+                    </div>
+                <% } %>
                 <div class="mySlides fade">
                   <img src="images/iphone6.png" style="width:100%">
                 </div>
