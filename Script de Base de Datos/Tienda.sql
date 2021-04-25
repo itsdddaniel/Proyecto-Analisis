@@ -1,5 +1,3 @@
--- MySQL Workbench Forward Engineering
-
 --SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 --SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 --SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -98,33 +96,6 @@ CREATE TABLE IF NOT EXISTS Producto (
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `Tienda`.`Paquete`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Paquete (
-  idPaquete INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  nomre VARCHAR(45) NOT NULL
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Paquete/Producto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Paquete_Producto (
-  id_Paquete INT NOT NULL,
-  id_Producto INT NOT NULL,
-
-    FOREIGN KEY (id_Producto)
-    REFERENCES Producto (id_producto)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_Paquete)
-    REFERENCES Paquete (idPaquete)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `Tienda`.`Cargo`
 -- -----------------------------------------------------
@@ -160,163 +131,23 @@ CREATE TABLE IF NOT EXISTS Empleado (
 CREATE TABLE IF NOT EXISTS Cliente (
   dni VARCHAR(45) NOT NULL PRIMARY KEY ,
   nombre VARCHAR(45) NOT NULL,
-  Apellidos VARCHAR(45) NOT NULL,
-  Pais VARCHAR(45) NOT NULL,
   Email VARCHAR(45) NOT NULL,
   Telefono VARCHAR(45) NOT NULL,
   Direccion VARCHAR(45) NOT NULL,
   username VARCHAR(45) NOT NULL,
   contraseña VARCHAR(16) NOT NULL,
+  ciudad VARCHAR(45) NOT NULL,
+  creditcard VARCHAR(45) NOT NULL DEFAULT "none",
   TipoPago ENUM("Efectivo","Credito") DEFAULT "Credito"
 ) ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `Tienda`.`Orden`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Orden (
-  idVenta INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  id_cliente VARCHAR(45) NOT NULL,
-  id_empleado VARCHAR(15) NOT NULL,
-  Fecha DATE NOT NULL,
-
-    FOREIGN KEY (id_empleado)
-    REFERENCES Empleado (dni)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_cliente)
-    REFERENCES Cliente (dni)
-    ON DELETE CASCADE ON UPDATE CASCADE
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  producto VARCHAR(100) NOT NULL,
+  productoPrecio INT NOT NULL,
+  fechaDePago DATETIME NOT NULL DEFAULT NOW(),
+  estado ENUM("No Pagado","Pagado") DEFAULT "Pagado"
 ) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Detalle Orden`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle_Orden (
-  id_venta INT AUTO_INCREMENT NOT NULL ,
-  id_producto INT NOT NULL ,
-  cantidad INT NOT NULL,
-  precioUnitario FLOAT NOT NULL,
-  SubTotal FLOAT UNSIGNED NOT NULL,
-  ISV FLOAT UNSIGNED NOT NULL,
-  Descuento FLOAT NOT NULL,
-  Total FLOAT UNSIGNED NOT NULL,
-  Recibido INT NULL,
-  Cambio FLOAT NULL,
-
-    FOREIGN KEY (id_producto)
-    REFERENCES Producto (id_producto)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_venta)
-    REFERENCES Orden (idVenta)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Distribuidor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Distribuidor (
-  idDistribuidor INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  nombre VARCHAR(45) NOT NULL,
-  telefono VARCHAR(45) NOT NULL,
-  fax VARCHAR(45) NOT NULL,
-  web VARCHAR(45) NOT NULL,
-  Direccion VARCHAR(45) NOT NULL
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Compra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Compra (
-  idCompra INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  id_distribuidor INT NOT NULL,
-  fecha DATETIME NOT NULL,
-
-    FOREIGN KEY (id_distribuidor)
-    REFERENCES Distribuidor (idDistribuidor)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Detalle Compra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle_Compra (
-  id_Compra INT AUTO_INCREMENT NOT NULL ,
-  id_producto INT NOT NULL ,
-  cantidad INT NOT NULL,
-  precio FLOAT NOT NULL,
-  NumReferencia VARCHAR(45) NOT NULL,
-
-    FOREIGN KEY (id_producto)
-    REFERENCES Producto (id_producto)
-    ON DELETE NO ACTION ON UPDATE NO ACTION,
-
-    FOREIGN KEY (id_Compra)
-    REFERENCES Compra (idCompra)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Devolucion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Devolucion (
-  idDevolucion INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  causa VARCHAR(45) NOT NULL
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Detalle Devolucion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Detalle_Devolucion (
-  id_Devolucion INT NOT NULL ,
-  id_producto INT NOT NULL ,
-
-    FOREIGN KEY (id_producto)
-    REFERENCES Producto (id_producto)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_Devolucion)
-    REFERENCES Devolucion (idDevolucion)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Accion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Accion (
-  idAccion INT AUTO_INCREMENT NOT NULL PRIMARY KEY ,
-  nombre VARCHAR(45) NOT NULL
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Tienda`.`Login`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Login1 (
-  idLogin INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  id_empleado VARCHAR(45) NOT NULL,
-  id_accion INT NOT NULL,
-  fecha DATETIME NOT NULL,
-
-    FOREIGN KEY (id_empleado)
-    REFERENCES Empleado (dni)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-
-    FOREIGN KEY (id_accion)
-    REFERENCES Accion (idAccion)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
-
 
 --SET SQL_MODE=@OLD_SQL_MODE;
 --SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

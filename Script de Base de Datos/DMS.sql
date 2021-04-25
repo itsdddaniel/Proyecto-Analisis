@@ -113,8 +113,6 @@ INSERT INTO Estado(tipoEstado) VALUES
 
     ("Existencia"),
     ("Agotado")
-    
-
 ;
 
 INSERT INTO Cargo(nombre) VALUES
@@ -128,13 +126,6 @@ INSERT INTO Empleado(dni,nombre,Apellidos,Pais,Email,Telefono,Direccion,contrase
     ("1803200012341","Josue","Cruz","Honduras","cruz.32@gmail.com","9812456","Res. Las Uvas","Cieloazul98",2),
     ("1203000012341","Maria","Avila","Honduras","mary15@gmail.com","33245164","Col. Miramontes","Computadora.17",1),
     ("0801199209215","Rosa","Quiñonez","Honduras","rosita25@gmail.com","99784512","Col Miraflorez","02145",4)
-;
-
-INSERT INTO Cliente(dni,nombre,Apellidos,Pais,Email,Telefono,Direccion,username,contraseña,TipoPago) VALUES
-    ("0301198212312","Pedro","Garcia","Honduras","pgarcia@gmail.com","33857413","Res. Las Uvas","Pedrito99","12345","Credito"),
-    ("0501197801234","Juan","Lopez","Honduras","jlopez@gmail.com","98754132","Col. Miramontes","Juancito_124","Corazoncitos","Credito"),
-    ("0802199799999","Alejandro","Lara","Honduras","lara98@gmail.com","95248762","Res Las Lomas","AleLara98","Supersayian2","Credito"),
-    ("0102199512341","Erick","Lopez","Honduras","erick_11@gmail.com","97256481","Res. Las Uvas","Ericksito_1999","hondurasforever","Credito")
 ;
 
 INSERT INTO Producto(id_producto,id_marca,id_estado,id_novedad,nombre,PrecioCompra,PrecioVenta,fechaEntrada,urlProducto,Descripcion) VALUES
@@ -169,7 +160,7 @@ INSERT INTO Producto(id_producto,id_marca,id_estado,id_novedad,nombre,PrecioComp
     (4120,1,1,1,"HP Smart Tank 530 USB",400,9000,NOW(),"https://drive.google.com/uc?id=1FZ67fFTJhEMb5fSnFATUCObPR4qmJrnT","Impresora HP"),
     (4130,1,1,1,"HP Smart Tank 515 Wi-Fi",500,7000,NOW(),"https://drive.google.com/uc?id=1XfqIBVdmmzPujxRhFwl2Xm_fYQpQP059","Impresora HP"),
 
-    (2010,1,1,1,"Samsung Smart TV",10000,15997.00,NOW(),"https://drive.google.com/uc?id=1PWhga1CyCRQ8NQtv53im6v5ecNDTzc6y","Televisor Smart TV de 58'' 4K UHD"),
+    (2010,1,1,1,"Samsung Smart TV",10000,15997.00,NOW(),"https://drive.google.com/uc?id=1sQ_6QNkTf9XYL4PZLss8AUcI7byv3-KD","Televisor Smart TV de 58'' 4K UHD"),
     (2011,1,1,1,"Samsung Smart TV",7000,11000.00,NOW(),"https://drive.google.com/uc?id=1Ldqsiw25vig0dC1q3APXIHzdPSaK7PeW",'Televisor Smart TV de 43" 4K UHD'),
     (2012,1,1,1,"Samsung Crystal TV",9000,13000.00,NOW(),"https://drive.google.com/uc?id=1qC9Euuu3SDjUPU2wS38jwrvR_JNkcHt0",'Televisor de 50" 4K UHD'),
     (2013,1,1,1,"Samsung TV",5000,8000.00,NOW(),"https://drive.google.com/uc?id=1ayCLNko1JTBpXXEYzwElgpTJJ16j4lnQ",'Televisor  de 32" HD'),
