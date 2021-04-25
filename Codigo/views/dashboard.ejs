@@ -16,32 +16,43 @@
                 </div>
             </header>
             <nav id="main-nav" class="main-nav">
-                <button onclick="location.href='/back';">Regresar</button>
             </nav>
-            <table>
-                <thead>
-                  <tr>
+            <table border="1">
+                <tr>
                     <th>Producto</th>
                     <th>Precio</th>
                     <th>Fecha de Pago</th>
                     <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
+                </tr>
+                <% try { %>
+                    <%
+                    if(data.length!=0){
+                    var i=1;
+                    data.forEach(function(test){
+                    %>
                     <tr>
+                        <td><%=test.producto %></td>
+                        <td><%=test.productoPrecio %></td>
+                        <td><%=test.fechaDePago %></td>
+                        <td><%=test.estado %></td>
                     </tr>
-                </tbody>
+                    <%  i++; }) %>
+                    <% } else{ %>
+                        <tr>
+                            <td colspan="7">No has realizado ninguna compra.</td>
+                        </tr>
+                    <% } %>
+                <% } catch { %>
+                    <tr>
+                        <td colspan="7">No has realizado ninguna compra.</td>
+                    </tr>
+                <% } %>
               </table>
                 <aside id="side" class="side">
-                    <button id="cart">Carrito</button>
-                    <div id="modalCart" class="modalCart">
-                        <div id="modalContentCart" class="modalContentCart">
-                            <span class="closeCart">&times;</span>
-                        </div>
-                    </div>
+                    <button onclick="location.href='/back';">Regresar</button>
                 </aside>
                 <footer class="main-footer">Derechos Reservados 2021</footer>
-            </div>
-            <script src="../scripts/scriptTwo.js"></script>
-        </body>
-        </html>
+        </div>
+        <script src="../scripts/scriptTwo.js"></script>
+    </body>
+</html>

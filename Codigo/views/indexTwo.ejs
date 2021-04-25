@@ -50,7 +50,7 @@
             <div class="slideshow-container">
                 <% try { %>
                     <% if ( sucessMessage.length > 0 ) { %>
-                        <div class="alert"><%= sucessMessage %> </div>
+                        <div class="alertTwo"><%= sucessMessage %> </div>
                       <% } %>
                     <% if ( checkoutSucess.length > 0 ) { %>
                         <div class="alertTwo"><%= checkoutSucess %> </div>
@@ -81,21 +81,16 @@
                 </div>
             </div>
             <aside id="side" class="side">
-                <div id="modalLogin" class="modalLogin">
-                    <div id="modalContentLogin" class="modalContentLogin">
-                        <span class="closeLogin">&times;</span>
-                        <label id="usernameID">Nombre de Usuario:</label><br>
-                        <input id="usernameIDInput" type="text">
-                        <br><label id="passwordID">Contraseña:</label><br>
-                        <input id="passwordIDInput" type="password"><br>
-                        <button type="submit">Ingresar</button>
-                    </div>
-                </div>
-
-                <button id="cart">Carrito</button>
+                <button id="cart">Sobre Nostros</button>
                 <div id="modalCart" class="modalCart">
                     <div id="modalContentCart" class="modalContentCart">
                         <span class="closeCart">&times;</span>
+                        <label>Grupo #4 - Análisis y Diseño de Sistemas</label><br>
+                        <br>
+                        <label>Daniel Alessandro Arteaga Martínez - 20161000031</label><br>
+                        <label>Jorge Guerrero - 20151030357</label><br>
+                        <label>Bryan Josué González Salgado - 20141001209</label><br>
+                        <label>Fredy Enrique Amador - 20151003958</label><br>
                     </div>
                 </div>
             </aside>
