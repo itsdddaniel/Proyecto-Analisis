@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS Producto (
   fechaEntrada DATETIME NOT NULL,
   urlProducto VARCHAR(250) NOT NULL,
   Descripcion TEXT(50) NULL,
+  Existencia TINYINT NOT NULL,
 
     FOREIGN KEY (id_marca)
     REFERENCES Marca (idMarca)
