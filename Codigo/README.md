@@ -16,7 +16,7 @@
 ## *Linux:*
 -----
 
-- Abrir una terminal en la carpeta de **Codigo/scripts** y hacer los siguientes pasos.
+- Abrir una terminal en la carpeta de **Codigo** y hacer los siguientes pasos.
 
 ### *Primer paso:*
 -----
@@ -77,14 +77,14 @@ Correr el siguiente comando:
 -----
 Correr el siguiente comando:
 
-    node node.js
+    node server.js
 
-Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
+Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *server.js*)
 
 ## *Windows:*
 -----
 
- - Abrir una terminal en la carpeta de **Codigo/scripts** y hacer los siguientes pasos.
+ - Abrir una terminal en la carpeta de **Codigo** y hacer los siguientes pasos.
 
 ### *Primer paso:*
 -----
@@ -132,6 +132,6 @@ Correr el siguiente comando:
 -----
 Correr el siguiente comando:
 
-    node node.js
+    node server.js
 
-Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
+Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *server.js*)
