@@ -71,6 +71,12 @@ Correr el siguiente comando:
 -----
 Correr el siguiente comando:
 
+    npm install express-flash
+
+### *Noveno paso:*
+-----
+Correr el siguiente comando:
+
     node node.js
 
 Una vez se corra el sexto paso, se abrira el navegador con el link: *http://localhost:8080* (Si el puerto 8080 esta ocupado se tiene que cambiar en el archivo *node.js*)
@@ -117,6 +123,12 @@ Correr el siguiente comando:
     npm install express-session
 
 ### *Septimo paso:*
+-----
+Correr el siguiente comando:
+
+    npm install express-flash
+
+### *Octavo paso:*
 -----
 Correr el siguiente comando:
 
