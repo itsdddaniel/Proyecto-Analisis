@@ -79,8 +79,8 @@ const db = mysql.createConnection
   });
   
 /**
- * ! Se definen todas las referencias de la página
- * al momento de presionar botones.
+ * ! Se define una ruta al momento de apretar
+ * el botón de regresar.
  * @author Daniel Arteaga, Jorge, Fredy, Bryan
  * @date 15/04/2021
  * @version 1.0
@@ -89,27 +89,76 @@ app.get('/back', function(req,res,next)
 {
   res.render("indexTwo");
 });
+
+/**
+ * ! Se define una ruta al momento de regresar
+ * a la página principal.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/mainpage',function(req,res,next)
 {
   res.render("indexTwo");
-})
+});
+
+/**
+ * ! Se define una mensajes de exito cuando se
+ * ingresa, se paga y se registra exitosamente.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/indexTwo',function(req,res,next)
 {
   res.render("indexTwo", {sucessMessage: req.flash('sucessMessage'),checkoutSucess: req.flash('checkoutSucess'),registerSucess: req.flash('registerSucess')});
-})
+});
+
+/**
+ * ! Se define mensajes al momento de ingresar
+ * datos erroneos y de exito cuando se sale de
+ * la página.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/index',function(req,res,next)
 {
   res.render("index",{errorMessage: req.flash('errorMessage'),logoutMessage: req.flash('logoutMessage')});
-})
+});
+
+/**
+ * ! Se define una ruta al momento de apretar
+ * el botón de ingresar.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/loginPage',function(req,res,next)
 {
   res.render("index");
-})
+});
+
+/**
+ * ! Se define una ruta al momento de apretar
+ * el botón de registrar.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/registerPage',function(req,res,next)
 {
   res.render("register");
-})
+});
 
+/**
+ * ! Se obtienen los datos de login y los compara
+ * con lo que esta en la bd, de ser iguales ingresa
+ * de lo contrario, no.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.post('/login', function(request, response) 
 {
 	var username = request.body.username;
@@ -140,6 +189,13 @@ app.post('/login', function(request, response)
 	}
 });
 
+/**
+ * ! Se define una ruta al momento de presionar
+ * el botón de Salir y se termina la session.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/logout', function(req ,res)
 {
   if(req.session.loggedin == true)
@@ -150,6 +206,14 @@ app.get('/logout', function(req ,res)
   }
 });
 
+/**
+ * ! Se define una ruta al momento de presionar
+ * el boton de Pagar, donde se ingresaran todos
+ * los datos para pagar.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/checkout', function(req ,res)
 {
     if(req.session.loggedin != true)
@@ -162,6 +226,16 @@ app.get('/checkout', function(req ,res)
     }
 });
 
+/**
+ * ! Se encarga de obtener los datos que ingreso
+ * el usuario para pagar y se comparan con los datos
+ * que se uso al momento de registrarse a la pagina, 
+ * de modo que si los datos son iguales el pago se realiza
+ * de lo contrario no.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.post('/pay', function(req ,res)
 {
     if(req.session.loggedin != true)
@@ -170,42 +244,71 @@ app.post('/pay', function(req ,res)
     }
     else
     {
+      let update = 'UPDATE Producto SET Existencia = ? WHERE nombre = ?;'
+      var insert =  `INSERT INTO Orden (producto,productoPrecio) VALUES ?;`;
+      var query = `UPDATE Cliente SET creditcard = ? WHERE dni = ?;`;
       var cardnumber = req.body.cardnumber;
       var dni = req.body.dni;
       var productName = JSON.parse(req.body.productName);
-      req.session.json = productName;
-      let result = productName.map(obj => [obj.productName, obj.productPrice]);
-      
-      var insert =  `INSERT INTO Orden (producto,productoPrecio) VALUES ?;`;
-      var query = `UPDATE Cliente SET creditcard = ? WHERE dni = ?;`;
+      let existance = productName.map(obj => obj.existance).toString();
+      let name = productName.map(obj => obj.productName).toString();
+      let result = productName.map(obj => [obj.productName, obj.productPrice]); 
+
+      let finalExistance = parseInt(existance) - 1;
+
       db.query(query, [cardnumber,dni], function(err,data)
       {
         if(err)
         {
           console.log(err);
-          res.render("index");
+          res.render("indexTwo");
         }
         else
         {
-          db.query(insert, [result],function(err,data)
+          if(finalExistance < 0)
           {
-            if(err)
+            res.render("indexTwo");
+          }
+          else
+          {
+            db.query(update, [finalExistance,name], function(err,data)
             {
-              console.log(err);
-              res.render("index");
-            }
-            else
-            {
-              req.session.loggedin = true;
-              req.flash('checkoutSucess',"Se ha realizado la compra, gracias por preferirnos!");
-              res.redirect('indexTwo');
-            }
-          });
+              if(err)
+              {
+                console.log(err);
+                res.render("indexTwo");
+              }
+              else
+              {
+                db.query(insert, [result],function(err,data)
+                {
+                  if(err)
+                  {
+                    console.log(err);
+                    res.render("indexTwo");
+                  }
+                  else
+                  {
+                    req.session.loggedin = true;
+                    req.flash('checkoutSucess',"Se ha realizado la compra, gracias por preferirnos!");
+                    res.redirect('indexTwo');
+                  }
+                });
+              }
+            });
+          }
         }
       });
     }
 });
 
+/**
+ * ! Se obtienen los datos de la pagina de registrar
+ * para luego poder ingresarlos en una tabla en la bd.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.post('/register', function(req,res)
 {
   var dni = req.body.dni;
@@ -239,7 +342,14 @@ app.post('/register', function(req,res)
   });
 });
 
-
+/**
+ * ! Se realiza un query a la base de datos al
+ * para verificar si el usuario ha realizado
+ * compras y pegarlas en una tabla HTML.
+ * @author Daniel Arteaga, Jorge, Fredy, Bryan
+ * @date 15/04/2021
+ * @version 1.0
+ */
 app.get('/dashboard', function(req ,res)
 {
     if(req.session.loggedin != true)
@@ -256,23 +366,15 @@ app.get('/dashboard', function(req ,res)
         }
         if(results.length > 0)
         {
-          var product = [];
-          var productPrice = [];
-          var payDate = [];
-          var state = [];
-          var length = Object.keys(results).length;
-          for(var i = 0; i<length; i++)
-          {
-            product[i] = results[i].producto;
-            productPrice[i] = results[i].productoPrecio;
-            payDate[i] = results[i].fechaDePago;
-            state[i] = results[i].estado;
-          }   
-          
-          let test = [{data: product, data2: productPrice}];
           app.set('view engine', 'ejs');
           app.set((__dirname, + '/views'));
-          res.render('dashboard.ejs', {data: test}); 
+          res.render('dashboard.ejs', {title: 'Productos Comprados', data: results}); 
+        }
+        else
+        {
+          app.set('view engine', 'ejs');
+          app.set((__dirname, + '/views'));
+          res.render('dashboard.ejs', {title: 'Productos Comprados'}); 
         }
       });
     }
@@ -301,6 +403,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -308,16 +411,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/celulares/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('celulares/celulares.ejs', {data: phoneNames, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
+    res.render('celulares/celulares.ejs', {data: phoneNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance}); 
   });
 });
 
@@ -339,6 +439,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -346,16 +447,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/computadoras/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('computadoras/computadoras.ejs', {data: desktopNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('computadoras/computadoras.ejs', {data: desktopNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -377,6 +475,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -384,17 +483,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/consolas/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('consolas/consolas.ejs', {data: consoleNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('consolas/consolas.ejs', {data: consoleNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -416,6 +511,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = []
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -423,16 +519,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/laptops/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('laptops/laptops.ejs', {data: laptopNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('laptops/laptops.ejs', {data: laptopNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -454,6 +547,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -461,16 +555,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/impresoras/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('impresoras/impresoras.ejs', {data: printerNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('impresoras/impresoras.ejs', {data: printerNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -492,6 +583,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -499,16 +591,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/televisores/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('televisores/televisores.ejs', {data: tvNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('televisores/televisores.ejs', {data: tvNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -530,6 +619,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -537,16 +627,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/parlantes/', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('parlantes/parlantes.ejs', {data: speakerNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('parlantes/parlantes.ejs', {data: speakerNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -568,6 +655,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -575,16 +663,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/tablets', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('tablets/tablets.ejs', {data: tabletNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('tablets/tablets.ejs', {data: tabletNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -606,6 +691,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -613,16 +699,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/accesorios', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('accesorios/accesorios.ejs', {data: accesoriesNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('accesorios/accesorios.ejs', {data: accesoriesNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -644,6 +727,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = []
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -651,16 +735,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/estufas', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('estufas/estufas.ejs', {data: stoveNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('estufas/estufas.ejs', {data: stoveNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -682,6 +763,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -689,16 +771,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/lavadoras', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('lavadoras/lavadoras.ejs', {data: washingNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('lavadoras/lavadoras.ejs', {data: washingNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -720,6 +799,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -727,16 +807,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/refrigeradoras', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('refrigeradoras/refrigeradoras.ejs', {data: refrigeratorNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('refrigeradoras/refrigeradoras.ejs', {data: refrigeratorNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -758,6 +835,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -765,16 +843,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/microondas', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('microondas/microondas.ejs', {data: microwaveNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('microondas/microondas.ejs', {data: microwaveNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -796,6 +871,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -803,16 +879,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/planchas', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('planchas/planchas.ejs', {data: ironNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('planchas/planchas.ejs', {data: ironNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -834,6 +907,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -841,16 +915,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/licuadoras', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('licuadoras/licuadoras.ejs', {data: blenderNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('licuadoras/licuadoras.ejs', {data: blenderNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -872,6 +943,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -879,16 +951,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/hornos', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('hornos/hornos.ejs', {data: ovenNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('hornos/hornos.ejs', {data: ovenNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -910,6 +979,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -917,16 +987,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/cafeteras', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('cafeteras/cafeteras.ejs', {data: coffeeNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('cafeteras/cafeteras.ejs', {data: coffeeNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -948,6 +1015,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -955,16 +1023,13 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/aspiradoras', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('aspiradoras/aspiradoras.ejs', {data: blowerNames, data2: links, data3: details, data4: price, session: req.session.loggedin});
+    res.render('aspiradoras/aspiradoras.ejs', {data: blowerNames, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance});
   });
 });
 
@@ -986,6 +1051,7 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
   var links = [];
   var details = [];
   var price = [];
+  var existance = [];
   var length = Object.keys(results).length;
   for(var i = 0; i<length; i++)
   {
@@ -993,15 +1059,12 @@ db.query("SELECT * FROM `Categoria_Producto` JOIN Producto ON Producto.id_produc
     links[i] = results[i].urlProducto;
     details[i] = results[i].Descripcion;
     price[i] = results[i].PrecioVenta;
-  }
-  for(var j = 0; j<length; j++)
-  {
-    links[j] = results[j].urlProducto
+    existance[i] = results[i].Existencia;
   }
   app.get('/views/aire', function(req, res) 
   {
     app.set('view engine', 'ejs');
     app.set((__dirname, + '/views'));
-    res.render('aire/aire.ejs', {data: airconditioning, data2: links, data3: details, data4: price, session: req.session.loggedin}); 
+    res.render('aire/aire.ejs', {data: airconditioning, data2: links, data3: details, data4: price, session: req.session.loggedin, data5: existance}); 
   });
 });
