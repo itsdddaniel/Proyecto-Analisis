@@ -97,15 +97,17 @@
             cartDiv.appendChild(label);
         }
     }
-    var count = 88;
+    var count = 0;
     var name = "<%= data %>";
     var link = "<%= data2 %>";
     var description = "<%= data3 %>";
     var price = "<%= data4 %>";
+    var existance = "<%= data5 %>";
     var result = name.split(",");
     var resultTwo = link.split(",")
     var resultThree = description.split(",");
     var resultFour = price.split(",");
+    var resultFive = existance.split(",");
     for(var i = 0; i<result.length; i++)
     {
         var label = document.createElement('label');
@@ -116,7 +118,8 @@
 
         addImg(resultTwo[i]);
         addDetails(resultThree[i],resultFour[i],count);
-        addToCart(result[i],resultFour[i],count);
+        addToCart(result[i],resultFour[i],count,resultFive[i]);
+        addExistance(resultFive[i],count);
 
     }
     function addImg(result)
@@ -129,6 +132,22 @@
         image.style.width = "55%";
         document.getElementById("container").appendChild(image);
     }
+    function addExistance(result,count)
+    {
+        var label = document.createElement('existance');
+        var button = document.getElementById(`addToCartButton${count}`);
+        label.innerHTML = `En existencia/almacen: ${result}`;
+        document.getElementById("container").appendChild(label);
+        if(result == 0)
+        {
+            button.disabled = true;
+        }
+        else
+        {
+            button.disabled = false;
+        }
+
+    }
     function addDetails(description,price,count)
     {
         var button = document.createElement("button");
@@ -136,7 +155,7 @@
         button.innerText = "Detalles";
         document.getElementById("container").appendChild(button);
 
-        var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">${price}</div></div>`;
+        var htmlString = `<div class="modal-content" id="modal-content"><span class="close${count}" id="close${count}"">&times;</span><div id="desc${count}">${description}</div><div id="price${count}">L${price}</div></div>`;
         var divModal = document.createElement("div");
         divModal.className = "modal";
         divModal.id = `modal${count}`;
@@ -147,10 +166,10 @@
         spanStyle.style.cssText = `color: #aaa; float: right; font-size: 28px; font-weight: bold;`;
 
         var desc = document.getElementById(`desc${count}`);
-        desc.style.cssText = "width: 50%; height: 490px; background: #222230; float: left; color: white";
+        desc.style.cssText = "background: #222230; float: left; color: white; margin: auto; padding: 20px; border: 1px solid #888; width: 50%; height: 90%;";
 
         var price = document.getElementById(`price${count}`);
-        price.style.cssText = "margin-left: 50%; height: 490px; background: #eb882c;";
+        price.style.cssText = "background: #eb882c; margin: auto; padding: 20px; border: 1px solid #888; width: 96%; height: 90%;";
 
         var modal = document.getElementById(`modal${count}`);
         var btn = document.getElementById(`modalButton${count}`);
@@ -165,15 +184,15 @@
             modal.style.display = "none";
         }
     }
-    function addToCart(result,price,count)
+    function addToCart(result,price,count,resultSecond)
     {
         var cartDiv = document.getElementById("modalContentCart");
-        var addToCart = document.createElement("button");
-        addToCart.id = `addToCart${count}`;
-        addToCart.innerText = "Añadir al Carrito";
-        document.getElementById("container").appendChild(addToCart);
+        var addToCartButton = document.createElement("button");
+        addToCartButton.id = `addToCartButton${count}`;
+        addToCartButton.innerText = "Añadir al Carrito";
+        document.getElementById("container").appendChild(addToCartButton);
 
-        addToCart.onclick = function()
+        addToCartButton.onclick = function()
         {
             try
             {
@@ -184,14 +203,14 @@
             {
                 console.log("Pass");
             }
-            if(addToCart.id == `addToCart${count}`) 
+            if(addToCartButton.id == `addToCartButton${count}`) 
             {
                 let cart = [];
                 if(localStorage.getItem('cart'))
                 {
                     cart = JSON.parse(localStorage.getItem('cart'));
                 }
-                cart.push({"productName": result, "productID": count, "productPrice": price});
+                cart.push({"productName": result, "productID": count, "productPrice": price, "existance": resultSecond});
                 localStorage.setItem("cart", JSON.stringify(cart));
 
                 var htmlString = `<label id='labelProductName'>${result} - L${price}</label>`
