@@ -7,7 +7,7 @@
  * @version 1.0
  */
 const open = require('open');
-const port = 3030; //Cambiar si el puerto 8080 esta ocupado.
+const port = 3030; //Cambiar si el puerto esta ocupado.
 var express = require('express'),
 path = require('path'),
 flash = require('express-flash'),
